@@ -13127,10 +13127,15 @@ div#notebook {
 <p>In order to list the partitions issue the following command:</p>
 <p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">sinfo</code></p>
 <p>which will list the partitions, the nodes in the partitions, availability and the current state:</p>
-<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+<div class="highlight"><pre><span></span><span class="o">[</span>bad45@loginnode1<span class="w"> </span>~<span class="o">]</span>$
 ❯<span class="w"> </span>sinfo
 PARTITION<span class="w">    </span>AVAIL<span class="w">  </span>TIMELIMIT<span class="w">  </span>NODES<span class="w">  </span>STATE<span class="w"> </span>NODELIST
-batch*<span class="w">          </span>up<span class="w"> </span><span class="m">3</span>-00:00:00<span class="w">      </span><span class="m">8</span><span class="w">  </span>maint<span class="w"> </span>node-<span class="o">[</span><span class="m">001</span>-008<span class="o">]</span>
+nodes*<span class="w">        </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">8</span><span class="w">   </span>idle<span class="w"> </span>node-<span class="o">[</span><span class="m">001</span>-008<span class="o">]</span>
+chemistry<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">5</span><span class="w">    </span>mix<span class="w"> </span>node-<span class="o">[</span><span class="m">009</span>-012,014<span class="o">]</span>
+chemistry<span class="w">     </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">3</span><span class="w">  </span>alloc<span class="w"> </span>node-<span class="o">[</span><span class="m">013</span>,015-016<span class="o">]</span>
+chemgpu<span class="w">       </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">   </span>idle<span class="w"> </span>node-018
+lifesci<span class="w">       </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">   </span>idle<span class="w"> </span>node-017
+lifescigpu<span class="w">    </span>up<span class="w">   </span>infinite<span class="w">      </span><span class="m">1</span><span class="w">   </span>idle<span class="w"> </span>node-019
 </pre></div>
 
 </div>
@@ -13145,12 +13150,10 @@ batch*<span class="w">          </span>up<span class="w"> </span><span class="m"
     <p>The Anatra cluster consists of a login node and eight compute nodes.</p>
 <h3 id="Login-node">Login node<a class="anchor-link" href="#Login-node">&#182;</a></h3><p>The login node has the following resources:</p>
 <ul>
-<li>48 Cores (24 x 2 AMD Milan processors)</li>
+<li>16 Cores (24 x 2 AMD Milan processors)</li>
 <li>128 GB memory (16 x 8 GB)</li>
 <li>~10.7 TB of shared storage space</li>
-<li>Nvidia Ampere A40 GPU card</li>
 </ul>
-<p>The GPU card enables us to support the use of VNC sessions for data visualisation including the use of Gaussview 6.</p>
 <h3 id="Compute-nodes">Compute nodes<a class="anchor-link" href="#Compute-nodes">&#182;</a></h3><p>The compute nodes have the following resources:</p>
 <ul>
 <li>48 Cores (24 x 2 AMD Milan processors)</li>
