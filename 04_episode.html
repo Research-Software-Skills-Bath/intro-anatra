@@ -13150,22 +13150,13 @@ div#notebook {
     <h3 id="-Quota-and-disk-usage%20"><i class="fa fa-pencil-square-o"></i> Quota and disk usage
 </h3>
     <p>We saw earlier that you have a 5GB quota for your home area.  Check your home area quota using the following commands:-</p>
-<div class="highlight"><pre><span></span>❯<span class="w"> </span>quota<span class="w"> </span>-us<span class="w"> </span>mjc62
-Disk<span class="w"> </span>quotas<span class="w"> </span><span class="k">for</span><span class="w"> </span>user<span class="w"> </span>mjc62<span class="w"> </span><span class="o">(</span>uid<span class="w"> </span><span class="m">1066738</span><span class="o">)</span>:
-<span class="w">     </span>Filesystem<span class="w">   </span>space<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace<span class="w">   </span>files<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace
-<span class="w">   </span>master:/apps<span class="w">   </span>5086M<span class="w">   </span>5120M<span class="w">   </span>6144M<span class="w">            </span>146k<span class="w">       </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
-<span class="w">   </span>master:/home<span class="w">   </span>5086M<span class="w">   </span>5120M<span class="w">   </span>6144M<span class="w">            </span>146k<span class="w">       </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
-<span class="o">[</span>bad45@loginnode1<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>quota<span class="w"> </span>-us<span class="w"> </span>bad45
+<div class="highlight"><pre><span></span>quota<span class="w"> </span>-us<span class="w"> </span>bad45
 Disk<span class="w"> </span>quotas<span class="w"> </span><span class="k">for</span><span class="w"> </span>user<span class="w"> </span>bad45<span class="w"> </span><span class="o">(</span>uid<span class="w"> </span><span class="m">1713200</span><span class="o">)</span>:
 <span class="w">      </span>Filesystem<span class="w">   </span>space<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace<span class="w">   </span>files<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace:
 <span class="m">172</span>.31.6.1:/mnt/shared/apps:
 <span class="w">              </span>4770M<span class="w">   </span>5120M<span class="w">   </span>6144M<span class="w">           </span><span class="m">35135</span><span class="w">       </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>:
 
-❯<span class="w"> </span>quota<span class="w"> </span>-gs<span class="w"> </span>hpc_pra-uat001
-Disk<span class="w"> </span>quotas<span class="w"> </span><span class="k">for</span><span class="w"> </span>group<span class="w"> </span>hpc_pra-uat001<span class="w"> </span><span class="o">(</span>gid<span class="w"> </span><span class="m">10649</span><span class="o">)</span>:
-<span class="w">     </span>Filesystem<span class="w">   </span>space<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace<span class="w">   </span>files<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace
-master:/scratch<span class="w">      </span>0K<span class="w">    </span>100G<span class="w">    </span>110G<span class="w">               </span><span class="m">1</span><span class="w">       </span><span class="m">0</span><span class="w">       </span><span class="m">0</span>
-<span class="o">[</span>bad45@loginnode1<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>quota<span class="w"> </span>-gs<span class="w"> </span>hpc_pra-0064
+quota<span class="w"> </span>-gs<span class="w"> </span>hpc_pra-0064
 Disk<span class="w"> </span>quotas<span class="w"> </span><span class="k">for</span><span class="w"> </span>group<span class="w"> </span>hpc_pra-0064<span class="w"> </span><span class="o">(</span>gid<span class="w"> </span><span class="m">8019</span><span class="o">)</span>:
 <span class="w">     </span>Filesystem<span class="w">   </span>space<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace<span class="w">   </span>files<span class="w">   </span>quota<span class="w">   </span>limit<span class="w">   </span>grace
 <span class="m">172</span>.31.6.1:/mnt/scratch
