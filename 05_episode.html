@@ -13134,10 +13134,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+<div class="highlight"><pre><span></span><span class="o">[</span>bad45@loginnode1<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>~
 ❯<span class="w"> </span>module<span class="w"> </span>list
 Currently<span class="w"> </span>Loaded<span class="w"> </span>Modulefiles:
-<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span>gcc/10.2.0<span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span>slurm/anatra/current
+<span class="w">  </span><span class="m">1</span><span class="o">)</span><span class="w"> </span>python/3.13.5<span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span>GCCcore/15.1.0<span class="w">   </span><span class="m">3</span><span class="o">)</span><span class="w"> </span>GCC/15.1.0
 </pre></div>
 
 </div>
@@ -13147,7 +13147,7 @@ Currently<span class="w"> </span>Loaded<span class="w"> </span>Modulefiles:
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can also run this command at any time to check which modules you have loaded or removed.
-By default only <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">gcc-10.2.0</code>, <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">slurm/anatra/current</code> are loaded. gcc provides the standard serial gnu compiler suite.</p>
+By default only <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">gcc-10.2.0</code> are loaded. gcc provides the standard serial gnu compiler suite.</p>
 
 </div>
 </div>
@@ -13157,14 +13157,17 @@ By default only <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see what modules are available with</p>
 <div class="highlight"><pre><span></span>❯<span class="w"> </span>module<span class="w"> </span>avail
------------------------------------------------------------<span class="w"> </span>/cm/local/modulefiles<span class="w"> </span>-----------------------------------------------------------
-boost/1.74.0<span class="w">            </span>cm-bios-tools<span class="w">  </span>cuda-dcgm/2.2.9.1<span class="w">  </span>gcc/10.2.0<span class="w">       </span>luajit<span class="w">        </span>module-info<span class="w">  </span>python3<span class="w">   </span>slurm/anatra/current
-cluster-tools-dell/9.1<span class="w">  </span>cmd<span class="w">            </span>dot<span class="w">                </span>ipmitool/1.8.18<span class="w">  </span>mariadb-libs<span class="w">  </span>null<span class="w">         </span>python37
-cluster-tools/9.1<span class="w">       </span>cmjob<span class="w">          </span>freeipmi/1.6.6<span class="w">     </span>lua/5.4.0<span class="w">        </span>module-git<span class="w">    </span>openldap<span class="w">     </span>shared
+---------------------------------------------------------------------------------<span class="w"> </span>/mnt/shared/apps/etc/modulefiles/compilers<span class="w"> </span>---------------------------------------------------------------------------------
+GCC/15.1.0<span class="w">  </span>GCCcore/14.2.0<span class="w">  </span>GCCcore/15.1.0
 
-----------------------------------------------------------<span class="w"> </span>/cm/shared/modulefiles<span class="w"> </span>-----------------------------------------------------------
-Anaconda3/2021.05<span class="w">    </span>dos2unix/7.4.0<span class="w">    </span>gaussian/16/C.01<span class="w">  </span>openmpi/gcc/64/1.10.7
-default-environment<span class="w">  </span>gaussian/09/A.02<span class="w">  </span>gaussview/6<span class="w">       </span>TurboVNC/2.2.90
+---------------------------------------------------------------------------------<span class="w"> </span>/mnt/shared/apps/etc/modulefiles/libraries<span class="w"> </span>---------------------------------------------------------------------------------
+cuda/12.9.1<span class="w">  </span>cuda/13.0.1<span class="w">  </span>openmpi/4.1.6<span class="w">  </span>openmpi/4.1.8<span class="w">  </span>openmpi/5.0.8
+-----------------------------------------------------------------------------------<span class="w"> </span>/mnt/shared/apps/etc/modulefiles/tools<span class="w"> </span>-----------------------------------------------------------------------------------
+apptainer/1.4.1<span class="w">  </span>git/2.49.0-GCCcore-14.2.0
+-------------------------------------------------------------------------------<span class="w"> </span>/mnt/shared/apps/etc/modulefiles/interpreters<span class="w"> </span>--------------------------------------------------------------------------------
+anaconda/2025.06<span class="w">  </span>python/3.13.5<span class="w">  </span>R/4.5.1
+-------------------------------------------------------------------------------<span class="w"> </span>/mnt/shared/apps/etc/modulefiles/applications<span class="w"> </span>--------------------------------------------------------------------------------
+aimall/19.10.12<span class="w">  </span>crest/3.0.2<span class="w">  </span>easybuild/5.1.1<span class="w">  </span>gaussian/09/A.02<span class="w">  </span>gaussian/16/C.01<span class="w">  </span>gaussview/6<span class="w">  </span>imb/2021.10<span class="w">  </span>nbo/7.0<span class="w">  </span>openbabel/3.1.1<span class="w">  </span>orca/6.0.1<span class="w">  </span>TurboVNC/2.2.90
 </pre></div>
 <p>A large number of dependencies have been hidden from this search, but can be seen with  <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">module avail --all</code>. Even when hidden, these modules can still be loaded if needed.</p>
 
@@ -13177,14 +13180,14 @@ default-environment<span class="w">  </span>gaussian/09/A.02<span class="w">  </
 <p>The software modules will be updated as we build, test and broaden the software stack. Generally speaking, whilst the location of module files may change, the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">module load</code> command required to load a specific version of software should not change, and notice will be given if any breaking changes are to be deployed.</p>
 <h2 id="Configuring-a-python-environment">Configuring a python environment<a class="anchor-link" href="#Configuring-a-python-environment">&#182;</a></h2><p>The <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">Anaconda3</code> module is available. A <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">compchem</code> environment has been configured with OpenBabel and goodvibes.</p>
 <div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
-❯<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>Anaconda3/2021.05
+❯<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>Anaconda3/2025.06
 
 mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
 ❯<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>list
 <span class="c1"># conda environments:</span>
 <span class="c1">#</span>
-base<span class="w">                  </span>*<span class="w">  </span>/cm/shared/apps/Anaconda3/2021.05
-compchem<span class="w">                 </span>/cm/shared/apps/Anaconda3/2021.05/envs/compchem
+base<span class="w">                  </span>*<span class="w">  </span>/mnt/shared/apps/Anaconda3/2025.06
+compchem<span class="w">                 </span>/mnt/shared/apps/Anaconda3/2025.06/envs/compchem
 
 mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
 ❯<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>compchem
