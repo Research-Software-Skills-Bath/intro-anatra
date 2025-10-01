@@ -13150,19 +13150,28 @@ lifescigpu<span class="w">    </span>up<span class="w">   </span>infinite<span c
     <p>The Anatra cluster consists of a login node and eight compute nodes.</p>
 <h3 id="Login-node">Login node<a class="anchor-link" href="#Login-node">&#182;</a></h3><p>The login node has the following resources:</p>
 <ul>
-<li>16 Cores (24 x 2 AMD Milan processors)</li>
-<li>128 GB memory (16 x 8 GB)</li>
-<li>~10.7 TB of shared storage space</li>
+<li>16 Cores</li>
+<li>100 GB memory</li>
+<li>2 TB of shared storage space</li>
 </ul>
 <h3 id="Compute-nodes">Compute nodes<a class="anchor-link" href="#Compute-nodes">&#182;</a></h3><p>The compute nodes have the following resources:</p>
 <ul>
-<li>48 Cores (24 x 2 AMD Milan processors)</li>
-<li>256 GB memory (16 x 16 GB), <ul>
-<li>~5.3 GB / core</li>
+<li>96 Cores (node-0[01-13)</li>
+<li>48 Cores (node-0[14-16)</li>
+<li>48 Cores (node-0[14-16)</li>
+<li>384 Cores (node-017)</li>
+<li>256 GB memory (node-0[01-08]),<ul>
+<li>~2.7 GB / core</li>
 <li>4 NUMA zones per socket</li>
 <li>6 cores per NUMA zone</li>
 </ul>
 </li>
+<li>384 GB memory (node-0[09-13]
+-~4 GB / core</li>
+<li>768 GB memory (node-0[14-16]
+-~16 GB / core</li>
+<li>2.2 TB memory (node-017)
+-~5.7 GB / core</li>
 <li>~960 GB NVMe local storage</li>
 </ul>
 <p>It is worth noting that jobs which span multiple NUMA zones or sockets may see a notable decrease in performance if memory bandwidth limited. As such, it is rarely advisable to request 25 cores where 24 is sufficient.</p>
