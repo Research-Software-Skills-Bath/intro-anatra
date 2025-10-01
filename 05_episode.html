@@ -12956,9 +12956,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .hll { background-color: #ffffcc }
 .highlight { background: #f8f8f8; }
 .highlight .c { color: #3D7B7B; font-style: italic } /* Comment */
-.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .err { border: 1px solid #F00 } /* Error */
 .highlight .k { color: #008000; font-weight: bold } /* Keyword */
-.highlight .o { color: #666666 } /* Operator */
+.highlight .o { color: #666 } /* Operator */
 .highlight .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
 .highlight .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
 .highlight .cp { color: #9C6500 } /* Comment.Preproc */
@@ -12967,6 +12967,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
 .highlight .gd { color: #A00000 } /* Generic.Deleted */
 .highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
 .highlight .gr { color: #E40000 } /* Generic.Error */
 .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
 .highlight .gi { color: #008400 } /* Generic.Inserted */
@@ -12974,34 +12975,34 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
 .highlight .gs { font-weight: bold } /* Generic.Strong */
 .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .gt { color: #04D } /* Generic.Traceback */
 .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
 .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
 .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
 .highlight .kp { color: #008000 } /* Keyword.Pseudo */
 .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
 .highlight .kt { color: #B00040 } /* Keyword.Type */
-.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .m { color: #666 } /* Literal.Number */
 .highlight .s { color: #BA2121 } /* Literal.String */
 .highlight .na { color: #687822 } /* Name.Attribute */
 .highlight .nb { color: #008000 } /* Name.Builtin */
-.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.highlight .no { color: #880000 } /* Name.Constant */
-.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .nc { color: #00F; font-weight: bold } /* Name.Class */
+.highlight .no { color: #800 } /* Name.Constant */
+.highlight .nd { color: #A2F } /* Name.Decorator */
 .highlight .ni { color: #717171; font-weight: bold } /* Name.Entity */
 .highlight .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
-.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nf { color: #00F } /* Name.Function */
 .highlight .nl { color: #767600 } /* Name.Label */
-.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nn { color: #00F; font-weight: bold } /* Name.Namespace */
 .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
 .highlight .nv { color: #19177C } /* Name.Variable */
-.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.highlight .w { color: #bbbbbb } /* Text.Whitespace */
-.highlight .mb { color: #666666 } /* Literal.Number.Bin */
-.highlight .mf { color: #666666 } /* Literal.Number.Float */
-.highlight .mh { color: #666666 } /* Literal.Number.Hex */
-.highlight .mi { color: #666666 } /* Literal.Number.Integer */
-.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #BBB } /* Text.Whitespace */
+.highlight .mb { color: #666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666 } /* Literal.Number.Float */
+.highlight .mh { color: #666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666 } /* Literal.Number.Oct */
 .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
 .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
 .highlight .sc { color: #BA2121 } /* Literal.String.Char */
@@ -13016,12 +13017,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
 .highlight .ss { color: #19177C } /* Literal.String.Symbol */
 .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
-.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .fm { color: #00F } /* Name.Function.Magic */
 .highlight .vc { color: #19177C } /* Name.Variable.Class */
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+.highlight .il { color: #666 } /* Literal.Number.Integer.Long */
     </style>
 
 
@@ -13133,10 +13134,10 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<div class="highlight"><pre><span></span>mjc62 <span class="k">in</span> anatra-01 <span class="k">in</span> ~
-❯ module list
-Currently Loaded Modulefiles:
- <span class="m">1</span><span class="o">)</span> gcc/10.2.0   <span class="m">2</span><span class="o">)</span> slurm/anatra/current
+<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>module<span class="w"> </span>list
+Currently<span class="w"> </span>Loaded<span class="w"> </span>Modulefiles:
+<span class="w"> </span><span class="m">1</span><span class="o">)</span><span class="w"> </span>gcc/10.2.0<span class="w">   </span><span class="m">2</span><span class="o">)</span><span class="w"> </span>slurm/anatra/current
 </pre></div>
 
 </div>
@@ -13155,15 +13156,15 @@ By default only <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>You can see what modules are available with</p>
-<div class="highlight"><pre><span></span>❯ module avail
------------------------------------------------------------ /cm/local/modulefiles -----------------------------------------------------------
-boost/1.74.0            cm-bios-tools  cuda-dcgm/2.2.9.1  gcc/10.2.0       luajit        module-info  python3   slurm/anatra/current
-cluster-tools-dell/9.1  cmd            dot                ipmitool/1.8.18  mariadb-libs  null         python37
-cluster-tools/9.1       cmjob          freeipmi/1.6.6     lua/5.4.0        module-git    openldap     shared
+<div class="highlight"><pre><span></span>❯<span class="w"> </span>module<span class="w"> </span>avail
+-----------------------------------------------------------<span class="w"> </span>/cm/local/modulefiles<span class="w"> </span>-----------------------------------------------------------
+boost/1.74.0<span class="w">            </span>cm-bios-tools<span class="w">  </span>cuda-dcgm/2.2.9.1<span class="w">  </span>gcc/10.2.0<span class="w">       </span>luajit<span class="w">        </span>module-info<span class="w">  </span>python3<span class="w">   </span>slurm/anatra/current
+cluster-tools-dell/9.1<span class="w">  </span>cmd<span class="w">            </span>dot<span class="w">                </span>ipmitool/1.8.18<span class="w">  </span>mariadb-libs<span class="w">  </span>null<span class="w">         </span>python37
+cluster-tools/9.1<span class="w">       </span>cmjob<span class="w">          </span>freeipmi/1.6.6<span class="w">     </span>lua/5.4.0<span class="w">        </span>module-git<span class="w">    </span>openldap<span class="w">     </span>shared
 
----------------------------------------------------------- /cm/shared/modulefiles -----------------------------------------------------------
-Anaconda3/2021.05    dos2unix/7.4.0    gaussian/16/C.01  openmpi/gcc/64/1.10.7
-default-environment  gaussian/09/A.02  gaussview/6       TurboVNC/2.2.90
+----------------------------------------------------------<span class="w"> </span>/cm/shared/modulefiles<span class="w"> </span>-----------------------------------------------------------
+Anaconda3/2021.05<span class="w">    </span>dos2unix/7.4.0<span class="w">    </span>gaussian/16/C.01<span class="w">  </span>openmpi/gcc/64/1.10.7
+default-environment<span class="w">  </span>gaussian/09/A.02<span class="w">  </span>gaussview/6<span class="w">       </span>TurboVNC/2.2.90
 </pre></div>
 <p>A large number of dependencies have been hidden from this search, but can be seen with  <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">module avail --all</code>. Even when hidden, these modules can still be loaded if needed.</p>
 
@@ -13175,27 +13176,27 @@ default-environment  gaussian/09/A.02  gaussview/6       TurboVNC/2.2.90
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The software modules will be updated as we build, test and broaden the software stack. Generally speaking, whilst the location of module files may change, the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">module load</code> command required to load a specific version of software should not change, and notice will be given if any breaking changes are to be deployed.</p>
 <h2 id="Configuring-a-python-environment">Configuring a python environment<a class="anchor-link" href="#Configuring-a-python-environment">&#182;</a></h2><p>The <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">Anaconda3</code> module is available. A <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">compchem</code> environment has been configured with OpenBabel and goodvibes.</p>
-<div class="highlight"><pre><span></span>mjc62 <span class="k">in</span> anatra-01 <span class="k">in</span> ~
-❯ module load Anaconda3/2021.05
+<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>Anaconda3/2021.05
 
-mjc62 <span class="k">in</span> anatra-01 <span class="k">in</span> ~
-❯ conda env list
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>conda<span class="w"> </span>env<span class="w"> </span>list
 <span class="c1"># conda environments:</span>
 <span class="c1">#</span>
-base                  *  /cm/shared/apps/Anaconda3/2021.05
-compchem                 /cm/shared/apps/Anaconda3/2021.05/envs/compchem
+base<span class="w">                  </span>*<span class="w">  </span>/cm/shared/apps/Anaconda3/2021.05
+compchem<span class="w">                 </span>/cm/shared/apps/Anaconda3/2021.05/envs/compchem
 
-mjc62 <span class="k">in</span> anatra-01 <span class="k">in</span> ~
-❯ conda activate compchem
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>conda<span class="w"> </span>activate<span class="w"> </span>compchem
 
-mjc62 <span class="k">in</span> anatra-01 <span class="k">in</span> ~ via 🅒 compchem
-❯ <span class="nb">type</span> obabel
-obabel is /cm/shared/apps/Anaconda3/2021.05/envs/compchem/bin/obabel
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~<span class="w"> </span>via<span class="w"> </span>🅒<span class="w"> </span>compchem
+❯<span class="w"> </span><span class="nb">type</span><span class="w"> </span>obabel
+obabel<span class="w"> </span>is<span class="w"> </span>/cm/shared/apps/Anaconda3/2021.05/envs/compchem/bin/obabel
 </pre></div>
 <p>Anaconda can also be used to create your own python environment if other packages are required. To recreate the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">compchem</code> environment for example:</p>
-<div class="highlight"><pre><span></span>conda create -n my-environment
-conda activate my-environment
-conda install -c patonlab -c conda-forge Goodvibes OpenBabel
+<div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>my-environment
+conda<span class="w"> </span>activate<span class="w"> </span>my-environment
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>patonlab<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>Goodvibes<span class="w"> </span>OpenBabel
 </pre></div>
 
 </div>
