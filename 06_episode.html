@@ -13100,14 +13100,14 @@ div#notebook {
 <span class="c1">#SBATCH --job-name=g09-test</span>
 <span class="c1">#SBATCH --account=[your-account]</span>
 
-<span class="c1">#SBATCH --partition=batch</span>
+<span class="c1">#SBATCH --partition=nodes</span>
 <span class="c1">#SBATCH --output=%j.out</span>
 <span class="c1">#SBATCH --error=%j.err</span>
 
 <span class="c1"># Job time</span>
 <span class="c1">#SBATCH --time=1-0            # 1 day. Max wall time is 3 days</span>
 
-<span class="c1">#SBATCH --mem-per-cpu=5300    # Requesting more memory than this will</span>
+<span class="c1">#SBATCH --mem-per-cpu=2700    # Requesting more memory than this will</span>
 <span class="w">                              </span><span class="c1"># allocate more CPUS to the job</span>
 
 <span class="c1">## Gaussian uses single nodes</span>
@@ -13116,7 +13116,6 @@ div#notebook {
 <span class="c1">#SBATCH --cpus-per-task=12</span>
 
 module<span class="w"> </span>purge
-module<span class="w"> </span>load<span class="w"> </span>slurm
 module<span class="w"> </span>load<span class="w"> </span>gaussian/09/A.02
 
 <span class="nb">source</span><span class="w"> </span><span class="nv">$g09profile</span>
@@ -13142,14 +13141,14 @@ g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>
 <span class="c1">#SBATCH --job-name=g16-test</span>
 <span class="c1">#SBATCH --account=[your-account]</span>
 
-<span class="c1">#SBATCH --partition=batch</span>
+<span class="c1">#SBATCH --partition=chemistry</span>
 <span class="c1">#SBATCH --output=%j.out</span>
 <span class="c1">#SBATCH --error=%j.err</span>
 
 <span class="c1"># Job time</span>
 <span class="c1">#SBATCH --time=1-0            # 1 day. Max wall time is 3 days</span>
 
-<span class="c1">#SBATCH --mem-per-cpu=5300    # Requesting more memory than this will</span>
+<span class="c1">#SBATCH --mem-per-cpu=2700    # Requesting more memory than this will</span>
 <span class="w">                              </span><span class="c1"># allocate more CPUS to the job</span>
 
 <span class="c1">## Gaussian uses single nodes</span>
@@ -13158,7 +13157,6 @@ g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>
 <span class="c1">#SBATCH --cpus-per-task=12</span>
 
 module<span class="w"> </span>purge
-module<span class="w"> </span>load<span class="w"> </span>slurm
 module<span class="w"> </span>load<span class="w"> </span>gaussian/16/C.01
 
 <span class="nb">source</span><span class="w"> </span><span class="nv">$g16profile</span>
