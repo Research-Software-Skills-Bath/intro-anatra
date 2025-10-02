@@ -13130,11 +13130,11 @@ div#notebook {
 <ul>
 <li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/home</code>: Each user is given a home folder, which is backed up and accessible on both login and compute nodes, with a soft quota of 5GB and a hard quota of 6GB. You can check your quota usage with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">quota -us &lt;username&gt;</code>.</p>
 </li>
-<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch</code>: 10TB shared file storage. It is <font size="3">**not backed up**</font> and should not be used for storing data long term. This space can be accessed from both the login and compute nodes.</p>
+<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch</code>: 20TB shared file storage. It is <font size="3">**not backed up**</font> and should not be used for storing data long term. This space can be accessed from both the login and compute nodes.</p>
 </li>
-<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/apps/</code>: 1TB Azure managed Disk. This space contains centrally compiled software for use of users.</p>
+<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/apps/</code>: 2TB managed Disk. This space contains centrally compiled software for use of users.</p>
 </li>
-<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/local</code>: The disk local to the machine being used. On compute nodes, there is 960 GB of NVMe storage located in this area, only accessible from the compute node.</p>
+<li><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/tmp</code>: The disk local to the machine being used. On compute nodes, there is 960 GB of NVMe storage located in this area, only accessible from the compute node.</p>
 </li>
 </ul>
 <p>Projects on Anatra are assigned storage space in <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-id]</code>, with a soft quota of 100GB and a hard quota of 110GB by default. Access to this space can be shared by multiple users, with the project owner managing access via the <a href="https://www.bath.ac.uk/account/cas-bin/group-admin">UNIX group management tool</a>.</p>
