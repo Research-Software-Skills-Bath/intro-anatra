@@ -13130,6 +13130,7 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/09/A.02
 <span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
 cp<span class="w"> </span><span class="nv">$infile</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
 <span class="nb">cd</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
 
@@ -13171,6 +13172,7 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/16/C.01
 <span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
 
 mkdir<span class="w"> </span>-p<span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
 cp<span class="w"> </span><span class="nv">$infile</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
 <span class="nb">cd</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
 
