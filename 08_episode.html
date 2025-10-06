@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <link rel="icon" type="image/png" href="css/favicon.png"/>
 
-<title>00_schedule</title>
+<title>08_episode</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13094,25 +13094,76 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-the-Anatra-HTC-service">Introduction to the Anatra HTC service<a class="anchor-link" href="#Introduction-to-the-Anatra-HTC-service">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The following onboarding workshop is an introduction to the new Anatra HTC service provided by the Research Computing team at the University of Bath.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prerequisites">Prerequisites<a class="anchor-link" href="#Prerequisites">&#182;</a></h2><p>In order to complete the workshop you should be familiar with:</p>
+<h1 id="Running-GPU-Jobs">Running GPU Jobs<a class="anchor-link" href="#Running-GPU-Jobs">&#182;</a></h1><h2 id="What-is-CUDA?">What is CUDA?<a class="anchor-link" href="#What-is-CUDA?">&#182;</a></h2><p>CUDA (Compute Unified Device Architecture) is NVIDIA's parallel computing platform that allows software to use GPUs for general-purpose processing. Many scientific applications in molecular dynamics, machine learning, and computational chemistry use CUDA to accelerate calculations that would take much longer on CPUs alone.</p>
+<h2 id="GPU-Partitions-on-Anatra">GPU Partitions on Anatra<a class="anchor-link" href="#GPU-Partitions-on-Anatra">&#182;</a></h2><p>Anatra provides two GPU partitions depending on your research area:</p>
 <ul>
-<li>The linux command line</li>
-<li>Accessing and submitting jobs to High Performance Computing clusters as a user</li>
+<li><strong>lifescigpu</strong> - For Life Sciences users - Uses <strong>Nvidia Hopper (H100, sm_90)</strong> architecture</li>
+<li><strong>chempgpu</strong> - For Chemistry users - Uses <strong>Nvidia Ada Lovelace (L40S, sm_89)</strong> architecture</li>
+</ul>
+<h2 id="Why-GPU-Architecture-Matters">Why GPU Architecture Matters<a class="anchor-link" href="#Why-GPU-Architecture-Matters">&#182;</a></h2><p>Different GPU models have different compute capabilities (architectures). Specifying the correct architecture ensures your code:</p>
+<ul>
+<li>Compiles with the right optimizations for your GPU</li>
+<li>Runs efficiently without compatibility issues</li>
+<li>Avoids runtime errors from architecture mismatches</li>
+</ul>
+<h2 id="Example-GPU-Job-Script">Example GPU Job Script<a class="anchor-link" href="#Example-GPU-Job-Script">&#182;</a></h2><p>Below is an example script for a GPU job, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=cuda-gpu-job</span>
+<span class="c1">#SBATCH --partition=lifescigpu   # or chempgpu for chemistry users</span>
+<span class="c1">#SBATCH --gres=gpu:1              # Request 1 GPU</span>
+<span class="c1">#SBATCH --time=00:05:00           # Set time limit</span>
+<span class="c1">#SBATCH --output=cuda_output.out  # Output file</span>
+
+<span class="c1"># Enable detailed error reporting</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="c1"># Load CUDA module</span>
+module<span class="w"> </span>load<span class="w"> </span>cuda/13.0.1
+
+<span class="c1"># Set your input file</span>
+<span class="nv">INPUT_FILE</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="c1"># Check if input file exists</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: No input file provided.&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Input file &#39;</span><span class="nv">$INPUT_FILE</span><span class="s2">&#39; not found.&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1"># Compile for the appropriate GPU architecture</span>
+<span class="c1"># For Life Science Users (Ada Lovelace L40S - sm_89):</span>
+nvcc<span class="w"> </span>-o<span class="w"> </span>job_exec<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span>-arch<span class="o">=</span>sm_89
+
+<span class="c1"># For Chemistry Users (Hopper H100 - sm_90):</span>
+<span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_90</span>
+
+<span class="c1"># Run the compiled program</span>
+./job_exec
+</pre></div>
+<p>Assuming these files are saved as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">gpu_job.slm</code> then they can be submitted with the command:</p>
+<div class="highlight"><pre><span></span><span class="go">sbatch gpu_job.slm input_file.cu</span>
+</pre></div>
+<h2 id="Key-Points-to-Remember">Key Points to Remember<a class="anchor-link" href="#Key-Points-to-Remember">&#182;</a></h2><ol>
+<li><strong>Always specify the correct partition</strong> for your research area</li>
+<li><strong>Match the architecture</strong> (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-arch=sm_XX</code>) to your GPU partition</li>
+<li><strong>Request appropriate GPU resources</strong> with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--gres=gpu:N</code></li>
+<li><strong>Load the CUDA module</strong> before compiling or running GPU code</li>
+<li><strong>Set reasonable time limits</strong> to avoid unnecessary queuing</li>
+</ol>
+<h2 id="Checking-Job-Status">Checking Job Status<a class="anchor-link" href="#Checking-Job-Status">&#182;</a></h2><div class="highlight"><pre><span></span><span class="go">squeue -u $USER        # Check your running jobs</span>
+<span class="go">squeue -p lifescigpu   # Check lifescigpu partition queue</span>
+<span class="go">squeue -p chempgpu     # Check chempgpu partition queue</span>
+</pre></div>
+<h2 id="Getting-Help">Getting Help<a class="anchor-link" href="#Getting-Help">&#182;</a></h2><p>If you encounter GPU-related issues:</p>
+<ul>
+<li>Check that you're using the correct partition</li>
+<li>Verify your architecture flag matches your partition's GPUs</li>
+<li>Ensure CUDA modules are loaded correctly</li>
+<li>Review your job output file for error messages</li>
 </ul>
 
 </div>
@@ -13121,63 +13172,11 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Schedule">Schedule<a class="anchor-link" href="#Schedule">&#182;</a></h2><p>Approximate timings for the lesson:</p>
-<table>
-<thead><tr>
-<th>Time</th>
-<th>Episode</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-:--</td>
-<td><a href="./00_setup.html">Setup</a></td>
-<td>Setup for the lesson</td>
-</tr>
-<tr>
-<td>0:05</td>
-<td><a href="./01_episode.html">Accessing Anatra</a></td>
-<td>Logging onto the system</td>
-</tr>
-<tr>
-<td>0:20</td>
-<td><a href="./02_episode.html">Slurm</a></td>
-<td>A brief overview of slurm</td>
-</tr>
-<tr>
-<td>0:30</td>
-<td><a href="./03_episode.html">Hardware</a></td>
-<td>Overview of available hardware</td>
-</tr>
-<tr>
-<td>0:40</td>
-<td><a href="./04_episode.html">Storage</a></td>
-<td>Storage set-up and where to keep your data</td>
-</tr>
-<tr>
-<td>0:50</td>
-<td><a href="./05_episode.html">Software</a></td>
-<td>Using software modules</td>
-</tr>
-<tr>
-<td>0:55</td>
-<td><a href="./06_episode.html">Running a job</a></td>
-<td>Submitting a job</td>
-</tr>
-<tr>
-<td>0:55</td>
-<td><a href="./07_episode.html">Starting a VNC session</a></td>
-<td>Visualising data</td>
-</tr>
-<tr>
-<td>0:55</td>
-<td><a href="./08_episode.html">Running GPU Jobs</a></td>
-<td>Submitting GPU jobs for CUDA applications</td>
-</tr>
-</tbody>
-</table>
-
+<div class="w3-bar w3-blue-grey">
+<a href="./07_episode.html" class="w3-left-align w3-bar-item w3-button w3-mobile" style="width:33%"><h2><i class="fa fa-angle-double-left"></i> Previous</h2></a>
+<a href="./00_schedule.html" class="w3-bar-item w3-button w3-center w3-mobile" style="width:33%"><h2>Schedule</h2></a>
+<a href="./00_schedule.html" class="w3-right-align w3-bar-item w3-button w3-right w3-mobile" style="width:33%"><h2>Next <i class="fa fa-angle-double-right"></i></h2></a>
+</div>
 </div>
 </div>
 </div>
