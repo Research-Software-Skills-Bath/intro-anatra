@@ -13106,57 +13106,40 @@ div#notebook {
 <li>Runs efficiently without compatibility issues</li>
 <li>Avoids runtime errors from architecture mismatches</li>
 </ul>
-<h2 id="Example-GPU-Job-Script">Example GPU Job Script<a class="anchor-link" href="#Example-GPU-Job-Script">&#182;</a></h2><p>Below is an example script for a GPU job, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-<span class="c1">#SBATCH --job-name=cuda-gpu-job</span>
-<span class="c1">#SBATCH --partition=lifescigpu   # or chempgpu for chemistry users</span>
-<span class="c1">#SBATCH --gres=gpu:1              # Request 1 GPU</span>
-<span class="c1">#SBATCH --time=00:05:00           # Set time limit</span>
-<span class="c1">#SBATCH --output=cuda_output.out  # Output file</span>
+<h2 id="Example-GPU-Job-Script">Example GPU Job Script<a class="anchor-link" href="#Example-GPU-Job-Script">&#182;</a></h2><p>Below is an example batch script for a GPU job, Anatra users can able to submit their batch job scripts from their respective working project directories i.e., Chemistry users it would be <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]</code> storage area and for Lifesciences users that would be <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/lifesciences/[project-code]</code> storage area.</p>
+<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><h1 id="SBATCH---job-name=cuda-gpu-job">SBATCH --job-name=cuda-gpu-job<a class="anchor-link" href="#SBATCH---job-name=cuda-gpu-job">&#182;</a></h1><h1 id="SBATCH---partition=lifescigpu---#-or-chempgpu-for-chemistry-users">SBATCH --partition=lifescigpu   # or chempgpu for chemistry users<a class="anchor-link" href="#SBATCH---partition=lifescigpu---#-or-chempgpu-for-chemistry-users">&#182;</a></h1><h1 id="SBATCH---gres=gpu:1--------------#-Request-1-GPU">SBATCH --gres=gpu:1              # Request 1 GPU<a class="anchor-link" href="#SBATCH---gres=gpu:1--------------#-Request-1-GPU">&#182;</a></h1><h1 id="SBATCH---time=00:05:00-----------#-Set-time-limit">SBATCH --time=00:05:00           # Set time limit<a class="anchor-link" href="#SBATCH---time=00:05:00-----------#-Set-time-limit">&#182;</a></h1><h1 id="SBATCH---output=cuda_output.out--#-Output-file">SBATCH --output=cuda_output.out  # Output file<a class="anchor-link" href="#SBATCH---output=cuda_output.out--#-Output-file">&#182;</a></h1><h1 id="Enable-detailed-error-reporting">Enable detailed error reporting<a class="anchor-link" href="#Enable-detailed-error-reporting">&#182;</a></h1><p>set -euo pipefail</p>
+<h1 id="Load-CUDA-module">Load CUDA module<a class="anchor-link" href="#Load-CUDA-module">&#182;</a></h1><p>module load cuda/13.0.1</p>
+<h1 id="Set-your-input-file">Set your input file<a class="anchor-link" href="#Set-your-input-file">&#182;</a></h1><p>INPUT_FILE=$1</p>
+<h1 id="Check-if-input-file-exists">Check if input file exists<a class="anchor-link" href="#Check-if-input-file-exists">&#182;</a></h1><p>if [ -z "$INPUT_FILE" ]; then
+    echo "Error: No input file provided."
+    exit 1
+fi</p>
+<p>if [ ! -f "$INPUT_FILE" ]; then
+    echo "Error: Input file '$INPUT_FILE' not found."
+    exit 1
+fi</p>
+<h1 id="Compile-for-the-appropriate-GPU-architecture">Compile for the appropriate GPU architecture<a class="anchor-link" href="#Compile-for-the-appropriate-GPU-architecture">&#182;</a></h1><h1 id="For-Life-Science-Users-(Hopper-H100---sm_90):">For Life Science Users (Hopper H100 - sm_90):<a class="anchor-link" href="#For-Life-Science-Users-(Hopper-H100---sm_90):">&#182;</a></h1><p>nvcc -o job_exec "$INPUT_FILE" -arch=sm_90</p>
+<h1 id="For-Chemistry-Users-(Ada-Lovelace-L40S---sm_89):">For Chemistry Users (Ada Lovelace L40S - sm_89):<a class="anchor-link" href="#For-Chemistry-Users-(Ada-Lovelace-L40S---sm_89):">&#182;</a></h1><h1 id="nvcc--o-job_exec-&quot;$INPUT_FILE&quot;--arch=sm_89">nvcc -o job_exec "$INPUT_FILE" -arch=sm_89<a class="anchor-link" href="#nvcc--o-job_exec-&quot;$INPUT_FILE&quot;--arch=sm_89">&#182;</a></h1><h1 id="Run-the-compiled-program">Run the compiled program<a class="anchor-link" href="#Run-the-compiled-program">&#182;</a></h1><p>./job_exec</p>
 
-<span class="c1"># Enable detailed error reporting</span>
-<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+<pre><code style="">
+Assuming these files are saved as `gpu_job.slm` then they can be submitted with the command:
 
-<span class="c1"># Load CUDA module</span>
-module<span class="w"> </span>load<span class="w"> </span>cuda/13.0.1
+**sbatch gpu_job.slm input_file.cu**
 
-<span class="c1"># Set your input file</span>
-<span class="nv">INPUT_FILE</span><span class="o">=</span><span class="nv">$1</span>
+## Key Points to Remember
 
-<span class="c1"># Check if input file exists</span>
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: No input file provided.&quot;</span>
-<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<span class="k">fi</span>
+1. **Always specify the correct partition** for your research area
+2. **Match the architecture** (`-arch=sm_XX`) to your GPU partition
+3. **Request appropriate GPU resources** with `--gres=gpu:N`
+4. **Load the CUDA module** before compiling or running GPU code
+5. **Set reasonable time limits** to avoid unnecessary queuing
 
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Error: Input file &#39;</span><span class="nv">$INPUT_FILE</span><span class="s2">&#39; not found.&quot;</span>
-<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
-<span class="k">fi</span>
+## Checking Job Status
 
-<span class="c1"># Compile for the appropriate GPU architecture</span>
-<span class="c1"># For Life Science Users (Hopper H100 - sm_90):</span>
-nvcc<span class="w"> </span>-o<span class="w"> </span>job_exec<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span>-arch<span class="o">=</span>sm_90
-
-<span class="c1"># For Chemistry Users (Ada Lovelace L40S - sm_89):</span>
-<span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_89</span>
-
-<span class="c1"># Run the compiled program</span>
-./job_exec
-</pre></div>
-<p>Assuming these files are saved as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">gpu_job.slm</code> then they can be submitted with the command:</p>
-<p><strong>sbatch gpu_job.slm input_file.cu</strong></p>
-<h2 id="Key-Points-to-Remember">Key Points to Remember<a class="anchor-link" href="#Key-Points-to-Remember">&#182;</a></h2><ol>
-<li><strong>Always specify the correct partition</strong> for your research area</li>
-<li><strong>Match the architecture</strong> (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-arch=sm_XX</code>) to your GPU partition</li>
-<li><strong>Request appropriate GPU resources</strong> with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--gres=gpu:N</code></li>
-<li><strong>Load the CUDA module</strong> before compiling or running GPU code</li>
-<li><strong>Set reasonable time limits</strong> to avoid unnecessary queuing</li>
-</ol>
-<h2 id="Checking-Job-Status">Checking Job Status<a class="anchor-link" href="#Checking-Job-Status">&#182;</a></h2><div class="highlight"><pre><span></span><span class="go">squeue -u $USER        # Check your running jobs</span>
-<span class="go">squeue -p lifescigpu   # Check lifescigpu partition queue</span>
-<span class="go">squeue -p chempgpu     # Check chempgpu partition queue</span>
-</pre></div>
+```console
+squeue -u $USER        # Check your running jobs
+squeue -p lifescigpu   # Check lifescigpu partition queue
+squeue -p chempgpu     # Check chempgpu partition queue</code></pre>
 <h2 id="Getting-Help">Getting Help<a class="anchor-link" href="#Getting-Help">&#182;</a></h2><p>If you encounter GPU-related issues:</p>
 <ul>
 <li>Check that you're using the correct partition</li>
