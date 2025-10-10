@@ -13,7 +13,7 @@
 
 ## 📚 About This Repository
 
-This repository contains the user reference technical documentation **"Introduction to Anatra"** - comprehensive guide to running research computing workloads on the University of Bath's High-Performance Computing (HPC) system.
+This repository contains the user reference technical documentation **"Introduction to Anatra HPC System"** - comprehensive guide to running research computing workloads on the University of Bath's High-Performance Computing (HPC) system.
 
 Provided by the **Research Computing Team - Digital, Data and Technology (DDaT)**
 
