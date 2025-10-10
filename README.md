@@ -21,10 +21,6 @@ Provided by the **Research Computing Team - Digital, Data and Technology (DDaT)*
 
 ## 🎯 What You'll Learn
 
-<table>
-<tr>
-<td width="50%">
-
 ### 🔐 System Access
 - Logging onto Anatra
 - SSH configuration
@@ -35,9 +31,6 @@ Provided by the **Research Computing Team - Digital, Data and Technology (DDaT)*
 - Submitting and monitoring jobs
 - Resource allocation
 
-</td>
-<td width="50%">
-
 ### 💻 Hardware & Software
 - Available hardware overview
 - GPU partitions and architectures
@@ -47,10 +40,6 @@ Provided by the **Research Computing Team - Digital, Data and Technology (DDaT)*
 - Running GPU jobs with CUDA
 - Data visualization with VNC
 - Storage management
-
-</td>
-</tr>
-</table>
 
 ---
 
@@ -87,7 +76,7 @@ This training resource is designed for researchers and students who need to leve
 
 ## 🤝 Support
 
-Need help? Contact the **Advancing Research Computing Team** at the University of Bath.
+Need help? Contact the **Research Computing Team - Digital, Data and Technology (DDaT)** at the University of Bath.
 
 ---
 
