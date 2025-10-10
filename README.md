@@ -2,9 +2,8 @@
 
 <div align="center">
 
-![HPC](https://img.shields.io/badge/HPC-High%20Performance%20Computing-blue?style=for-the-badge)
-![University of Bath](https://img.shields.io/badge/University-of%20Bath-orange?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+![HPC](https://img.shields.io/badge/HPC-High%20Performance%20Computing-2c3e50?style=flat-square)
+![University of Bath](https://img.shields.io/badge/University%20of%20Bath-Research%20Computing-34495e?style=flat-square)
 
 **A comprehensive training guide for the Anatra High-Performance Computing system**
 
@@ -16,7 +15,7 @@
 
 This repository contains the lesson **"Introduction to Anatra"** - your comprehensive guide to running research computing workloads on the University of Bath's High-Performance Computing (HPC) system.
 
-Provided by the **Advancing Research Computing Team** 🚀
+Provided by the **Research Computing Team - Digital, Data and Technology (DDaT)**
 
 ---
 
@@ -100,7 +99,7 @@ This training material is provided by the University of Bath for educational res
 
 <div align="center">
 
-**Made with ❤️ by the Advancing Research Computing Team**
+**Made with ❤️ by the Research Computing Team - Digital, Data and Technology (DDaT)**
 
 ⭐ Star this repository if you find it helpful
 
