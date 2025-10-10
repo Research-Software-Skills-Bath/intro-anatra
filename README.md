@@ -1,4 +1,107 @@
-# Introduction to Anatra HPC System
+# 🖥️ Introduction to Anatra HPC System
 
-This repository contains a lesson titled "Introduction to Anatra" - a comprehensive guide for running research computing workloads on the University of Bath's High-Performance Computing (HPC) system, provided by the Advancing Research Computing Team.
-It's designed as a training resource for researchers and students who need to use the Anatra HPC cluster for computational research.
+<div align="center">
+
+![HPC](https://img.shields.io/badge/HPC-High%20Performance%20Computing-blue?style=for-the-badge)
+![University of Bath](https://img.shields.io/badge/University-of%20Bath-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)
+
+**A comprehensive training guide for the Anatra High-Performance Computing system**
+
+</div>
+
+---
+
+## 📚 About This Repository
+
+This repository contains the lesson **"Introduction to Anatra"** - your comprehensive guide to running research computing workloads on the University of Bath's High-Performance Computing (HPC) system.
+
+Provided by the **Advancing Research Computing Team** 🚀
+
+---
+
+## 🎯 What You'll Learn
+
+<table>
+<tr>
+<td width="50%">
+
+### 🔐 System Access
+- Logging onto Anatra
+- SSH configuration
+- Authentication methods
+
+### 📊 Job Management
+- Understanding Slurm scheduler
+- Submitting and monitoring jobs
+- Resource allocation
+
+</td>
+<td width="50%">
+
+### 💻 Hardware & Software
+- Available hardware overview
+- GPU partitions and architectures
+- Software modules and environments
+
+### 🎮 Advanced Topics
+- Running GPU jobs with CUDA
+- Data visualization with VNC
+- Storage management
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Getting Started
+
+This training resource is designed for researchers and students who need to leverage high-performance computing for their computational research.
+
+---
+
+## 📖 Lesson Structure
+
+| Episode | Topic | Description |
+|---------|-------|-------------|
+| 00 | Setup | Initial setup for the lesson |
+| 01 | Accessing Anatra | Logging onto the HPC system |
+| 02 | Slurm | Brief overview of the job scheduler |
+| 03 | Hardware | Overview of available hardware |
+| 04 | Storage | Storage setup and data management |
+| 05 | Software | Using software modules |
+| 06 | Running a Job | Submitting jobs to the cluster |
+| 07 | VNC Session | Visualizing data remotely |
+| 08 | GPU Jobs | Running CUDA applications on GPUs |
+
+---
+
+## 💡 Key Features
+
+- ✅ **Hands-on tutorials** with real examples
+- ✅ **GPU computing** support for Life Sciences and Chemistry
+- ✅ **Interactive sessions** via VNC
+- ✅ **Best practices** for HPC workflows
+
+---
+
+## 🤝 Support
+
+Need help? Contact the **Advancing Research Computing Team** at the University of Bath.
+
+---
+
+## 📝 License
+
+This training material is provided by the University of Bath for educational research purposes.
+
+---
+
+<div align="center">
+
+**Made with ❤️ by the Advancing Research Computing Team**
+
+⭐ Star this repository if you find it helpful
+
+</div>
