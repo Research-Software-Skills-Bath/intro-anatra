@@ -1,11 +1,4 @@
-# Introduction to Anatra
+# Introduction to Anatra HPC System
 
-(C) 2021 Matt Clarke (M.J.Clarke@bath.ac.uk), Rsearch Software Engineer, University Bath
-
-This repository contains the lesson 'Introduction to Anatra', an introduction to the HTC system for running Gaussion workloads at the University of Bath provided by the Advancing Research Computing Team.
-
-The lesson is delivered in the jupyter notebooks based build system developed by Jack Betteridge and James Grant for Advancing Research Computing at University of Bath.
-
-## Changes
-
-    
+This repository contains a lesson titled "Introduction to Anatra" - a comprehensive guide for running research computing workloads on the University of Bath's High-Performance Computing (HPC) system, provided by the Advancing Research Computing Team.
+It's designed as a training resource for researchers and students who need to use the Anatra HPC cluster for computational research.
