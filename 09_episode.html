@@ -13173,14 +13173,14 @@ module<span class="w"> </span>load<span class="w"> </span>apptainer
 <span class="c1"># Create output directory if it doesn&#39;t exist</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
 
-<span class="c1"># Run FastQC quality control</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Running FastQC on </span><span class="nv">$INPUT_FILE</span><span class="s2">...&quot;</span>
+<span class="c1"># Run Application</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Running on </span><span class="nv">$INPUT_FILE</span><span class="s2">...&quot;</span>
 apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">\n    &quot;</span><span class="nv">$INPUT_DIR</span>/<span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
 
 <span class="s2">echo &quot;</span>Analysis<span class="w"> </span>complete.<span class="w"> </span>Results<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
 </pre></div>
 <p>Save this as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">run_script.slm</code> and submit with:</p>
-<div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_script.slm<span class="w"> </span><span class="sb">`</span>&lt;file&gt;<span class="sb">`</span>
+<div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_script.slm<span class="w"> </span>your_file
 </pre></div>
 <h2 id="Checking-Container-Information">Checking Container Information<a class="anchor-link" href="#Checking-Container-Information">&#182;</a></h2><div class="highlight"><pre><span></span><span class="c1"># View container metadata</span>
 apptainer<span class="w"> </span>inspect<span class="w"> </span>biotools.sif
