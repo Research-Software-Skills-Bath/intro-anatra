@@ -13118,8 +13118,7 @@ From:<span class="w"> </span>condaforge/mambaforge:latest
 <span class="w">    </span>conda<span class="w"> </span>install<span class="w"> </span>-n<span class="w"> </span>base<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>mamba<span class="w"> </span>-y
 
 <span class="w">    </span><span class="c1"># Create environment with your bioinformatics tools</span>
-<span class="w">    </span>mamba<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>biotools<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="se">\</span>
-<span class="w">        </span>-y
+<span class="w">    </span>mamba<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>biotools<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>-y<span class="se">\</span>
 
 <span class="w">    </span><span class="c1"># Clean up to reduce container size</span>
 <span class="w">    </span>conda<span class="w"> </span>clean<span class="w"> </span>--all<span class="w"> </span>-y
@@ -13175,9 +13174,10 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</
 
 <span class="c1"># Run Application</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Running on </span><span class="nv">$INPUT_FILE</span><span class="s2">...&quot;</span>
-apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">\n    &quot;</span><span class="nv">$INPUT_DIR</span>/<span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
+apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="s2">&quot;</span><span class="nv">$INPUT_DIR</span><span class="s2">/</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
 
-<span class="s2">echo &quot;</span>Analysis<span class="w"> </span>complete.<span class="w"> </span>Results<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Analysis complete. Results in </span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
 </pre></div>
 <p>Save this as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">run_script.slm</code> and submit with:</p>
 <div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_script.slm<span class="w"> </span>your_file
