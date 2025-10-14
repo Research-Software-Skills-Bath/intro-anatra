@@ -13176,14 +13176,12 @@ mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</
 
 <span class="c1"># Run FastQC quality control</span>
 <span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Running FastQC on </span><span class="nv">$INPUT_FILE</span><span class="s2">...&quot;</span>
-apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">\n    fastqc -t &quot;</span><span class="nv">$SLURM_CPUS_PER_TASK</span><span class="s2">&quot; \</span>
-<span class="s2">    -o &quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot; \</span>
-<span class="s2">    &quot;</span><span class="nv">$INPUT_DIR</span>/<span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
+apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">\n    &quot;</span><span class="nv">$INPUT_DIR</span>/<span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
 
 <span class="s2">echo &quot;</span>Analysis<span class="w"> </span>complete.<span class="w"> </span>Results<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
 </pre></div>
-<p>Save this as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">run_fastqc.slm</code> and submit with:</p>
-<div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_fastqc.slm<span class="w"> </span>sample_reads.fastq
+<p>Save this as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">run_script.slm</code> and submit with:</p>
+<div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_script.slm<span class="w"> </span>sample_reads.fastq
 </pre></div>
 <h2 id="Checking-Container-Information">Checking Container Information<a class="anchor-link" href="#Checking-Container-Information">&#182;</a></h2><div class="highlight"><pre><span></span><span class="c1"># View container metadata</span>
 apptainer<span class="w"> </span>inspect<span class="w"> </span>biotools.sif
