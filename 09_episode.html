@@ -13096,7 +13096,7 @@ div#notebook {
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Running-Containerized-Jobs-with-Apptainer">Running Containerized Jobs with Apptainer<a class="anchor-link" href="#Running-Containerized-Jobs-with-Apptainer">&#182;</a></h1><h2 id="What-is-Apptainer?">What is Apptainer?<a class="anchor-link" href="#What-is-Apptainer?">&#182;</a></h2><p>Apptainer (formerly Singularity) is a container platform designed for HPC environments. It allows you to package software, libraries, and dependencies into a single container file, ensuring your analysis runs consistently across different systems. Unlike Docker, Apptainer doesn't require root privileges to run containers, making it ideal for shared HPC systems like Anatra.</p>
 <h2 id="Getting-Started-with-Apptainer">Getting Started with Apptainer<a class="anchor-link" href="#Getting-Started-with-Apptainer">&#182;</a></h2><h3 id="Loading-the-Module">Loading the Module<a class="anchor-link" href="#Loading-the-Module">&#182;</a></h3><p>Before using Apptainer, load the module:</p>
-<div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>apptainer
+<div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>apptainer/1.4.1
 
 <span class="c1"># Verify it&#39;s loaded</span>
 apptainer<span class="w"> </span>--version
@@ -13105,7 +13105,7 @@ apptainer<span class="w"> </span>--version
 <p><strong>Option 1: Remote Build (Recommended)</strong></p>
 <p>Create a definition file <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">biotools.def</code>:</p>
 <div class="highlight"><pre><span></span>Bootstrap:<span class="w"> </span>docker
-From:<span class="w"> </span>mambaforge/mambaforge:latest
+From:<span class="w"> </span>condaforge/mambaforge:latest
 
 %post
 <span class="w">    </span><span class="c1"># Configure conda channels in the correct priority order</span>
@@ -13120,9 +13120,6 @@ From:<span class="w"> </span>mambaforge/mambaforge:latest
 <span class="w">    </span><span class="c1"># Create environment with your bioinformatics tools</span>
 <span class="w">    </span>mamba<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>biotools<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span><span class="se">\</span>
 <span class="w">        </span><span class="nv">samtools</span><span class="o">=</span><span class="m">1</span>.17<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="nv">bwa</span><span class="o">=</span><span class="m">0</span>.7.17<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="nv">bcftools</span><span class="o">=</span><span class="m">1</span>.17<span class="w"> </span><span class="se">\</span>
-<span class="w">        </span><span class="nv">fastqc</span><span class="o">=</span><span class="m">0</span>.12.1<span class="w"> </span><span class="se">\</span>
 <span class="w">        </span>-y
 
 <span class="w">    </span><span class="c1"># Clean up to reduce container size</span>
@@ -13142,7 +13139,7 @@ From:<span class="w"> </span>mambaforge/mambaforge:latest
 <span class="w">    </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
 </pre></div>
 <p>Build the container remotely (requires free Sylabs Cloud account):</p>
-<div class="highlight"><pre><span></span>apptainer<span class="w"> </span>build<span class="w"> </span>--remote<span class="w"> </span>biotools.sif<span class="w"> </span>biotools.def
+<div class="highlight"><pre><span></span>apptainer<span class="w"> </span>build<span class="w"> </span>biotools.sif<span class="w"> </span>biotools.def
 </pre></div>
 <p><strong>Option 2: Build Locally and Transfer</strong></p>
 <p>If you have a local machine with sudo access:</p>
