@@ -13102,56 +13102,58 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>The Anatra High Performance Compute system serves University of Bath's research computing needs with specialized hardware configurations for different research domains. The cluster consists of 19 compute nodes organized into partitions based on hardware capabilities and departmental requirements.</p>
-<h2 id="&#128202;-PARTITION-LAYOUT">&#128202; PARTITION LAYOUT<a class="anchor-link" href="#&#128202;-PARTITION-LAYOUT">&#182;</a></h2><table>
+<h2 id="&#128202;-Partition-Layout">&#128202; Partition Layout<a class="anchor-link" href="#&#128202;-Partition-Layout">&#182;</a></h2><table>
 <thead><tr>
-<th>Partition</th>
-<th>Nodes</th>
-<th>Count</th>
-<th>Description</th>
+<th style="text-align:left">Partition</th>
+<th style="text-align:center">Nodes</th>
+<th style="text-align:center">Count</th>
+<th style="text-align:left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>🟢 nodes</td>
-<td>001–008</td>
-<td>8 nodes</td>
-<td>General purpose computing</td>
+<td style="text-align:left">🟢 nodes</td>
+<td style="text-align:center">001–008</td>
+<td style="text-align:center">8 nodes</td>
+<td style="text-align:left">General purpose computing</td>
 </tr>
 <tr>
-<td>🧪 chemistry</td>
-<td>009–016</td>
-<td>8 nodes</td>
-<td>Chemistry computing</td>
+<td style="text-align:left">🧪 chemistry</td>
+<td style="text-align:center">009–016</td>
+<td style="text-align:center">8 nodes</td>
+<td style="text-align:left">Chemistry computing</td>
 </tr>
 <tr>
-<td>🧬 lifesci</td>
-<td>017</td>
-<td>1 node</td>
-<td>Life sciences computing</td>
+<td style="text-align:left">🧬 lifesci</td>
+<td style="text-align:center">017</td>
+<td style="text-align:center">1 node</td>
+<td style="text-align:left">Life sciences computing</td>
 </tr>
 <tr>
-<td>💎 chempgpu</td>
-<td>018</td>
-<td>1 node</td>
-<td>GPU chemistry computing</td>
+<td style="text-align:left">💎 chempgpu</td>
+<td style="text-align:center">018</td>
+<td style="text-align:center">1 node</td>
+<td style="text-align:left">GPU chemistry computing</td>
 </tr>
 <tr>
-<td>🎯 lifescigpu</td>
-<td>019</td>
-<td>1 node</td>
-<td>GPU life sciences computing</td>
+<td style="text-align:left">🎯 lifescigpu</td>
+<td style="text-align:center">019</td>
+<td style="text-align:center">1 node</td>
+<td style="text-align:left">GPU life sciences computing</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h2 id="&#128187;-NODE-INFORMATION">&#128187; NODE INFORMATION<a class="anchor-link" href="#&#128187;-NODE-INFORMATION">&#182;</a></h2><p>After logging into the Anatra HPC system, users can view node and partition details using the following commands:</p>
-<p>```bash
-💡 View all partitions and nodes
-sinfo -Nel</p>
-<p>⚙️ Show detailed node hardware and resource info
-scontrol show nodes</p>
-<p>📊 Summarize partitions, node states, and available resources
-sinfo -o "%P %N %t %C %m %G"</p>
+<h2 id="&#128187;-Node-Information">&#128187; Node Information<a class="anchor-link" href="#&#128187;-Node-Information">&#182;</a></h2><p>After logging into the Anatra HPC system, users can view node and partition details using the following commands:</p>
+<p><strong>💡 View all partitions and nodes</strong></p>
+<div class="highlight"><pre><span></span>sinfo<span class="w"> </span>-Nel
+</pre></div>
+<p><strong>⚙️ Show detailed node hardware and resource info</strong></p>
+<div class="highlight"><pre><span></span>scontrol<span class="w"> </span>show<span class="w"> </span>nodes
+</pre></div>
+<p><strong>📊 Summarize partitions, node states, and available resources</strong></p>
+<div class="highlight"><pre><span></span>sinfo<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;%P %N %t %C %m %G&quot;</span>
+</pre></div>
 
 </div>
 </div>
