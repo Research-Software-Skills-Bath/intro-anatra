@@ -13094,14 +13094,65 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-the-Anatra-HTC-service">Introduction to the Anatra HTC service<a class="anchor-link" href="#Introduction-to-the-Anatra-HTC-service">&#182;</a></h1>
+<h1 id="Introduction-to-the-Anatra-HPC-service">Introduction to the Anatra HPC service<a class="anchor-link" href="#Introduction-to-the-Anatra-HPC-service">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The following onboarding workshop is an introduction to the new Anatra HTC service provided by the Research Computing team at the University of Bath.</p>
+<p>The Anatra High Performance Compute system serves University of Bath's research computing needs with specialized hardware configurations for different research domains. The cluster consists of 19 compute nodes organized into partitions based on hardware capabilities and departmental requirements.</p>
+<p>📊 <strong>PARTITION LAYOUT</strong></p>
+<table>
+<thead><tr>
+<th>Partition</th>
+<th>Nodes</th>
+<th>Count</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🟢 nodes</td>
+<td>001–008</td>
+<td>8 nodes</td>
+<td>General purpose computing</td>
+</tr>
+<tr>
+<td>⚗️ chemistry</td>
+<td>009–016</td>
+<td>8 nodes</td>
+<td>Chemistry computing</td>
+</tr>
+<tr>
+<td>🧬 lifesci</td>
+<td>017</td>
+<td>1 node</td>
+<td>Life sciences computing</td>
+</tr>
+<tr>
+<td>💠 chemgpu</td>
+<td>018</td>
+<td>1 node</td>
+<td>GPU chemistry computing</td>
+</tr>
+<tr>
+<td>🎯 lifescigpu</td>
+<td>019</td>
+<td>1 node</td>
+<td>GPU life sciences computing</td>
+</tr>
+</tbody>
+</table>
+<p>🖥️ <strong>NODE INFORMATION</strong></p>
+<p>After logging into the Anatra HPC system, users can view node and partition details using the following commands:</p>
+<p>```bash
+💡 View all partitions and nodes
+sinfo -Nel</p>
+<p>⚙️ Show detailed node hardware and resource info
+scontrol show nodes</p>
+<p>📊 Summarize partitions, node states, and available resources
+sinfo -o "%P %N %t %C %m %G"</p>
 
 </div>
 </div>
