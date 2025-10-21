@@ -13154,8 +13154,7 @@ div#notebook {
 </ul>
 <hr>
 <h2 id="System-Information-Commands">System Information Commands<a class="anchor-link" href="#System-Information-Commands">&#182;</a></h2><p>After connecting to the Anatra HPC system, users can query nodes and cluster partitions specific detailed information using the following SLURM commands:</p>
-<h3 id="Display-All-Partitions-and-Nodes">Display All Partitions and Nodes<a class="anchor-link" href="#Display-All-Partitions-and-Nodes">&#182;</a></h3><div class="highlight"><pre><span></span>sinfo<span class="w"> </span>-Nel
-</pre></div>
+<h3 id="Display-All-Partitions-and-Nodes">Display All Partitions and Nodes<a class="anchor-link" href="#Display-All-Partitions-and-Nodes">&#182;</a></h3><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF"> sinfo -Nel </code></p>
 <p><strong>Command breakdown:</strong></p>
 <ul>
 <li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">sinfo</code> — Display node and partition information</li>
@@ -13165,8 +13164,7 @@ div#notebook {
 </ul>
 <p><strong>Use case:</strong> Provides a complete overview of all partitions and nodes, including their current states and hardware capabilities.</p>
 <hr>
-<h3 id="View-Detailed-Node-Hardware-Specifications">View Detailed Node Hardware Specifications<a class="anchor-link" href="#View-Detailed-Node-Hardware-Specifications">&#182;</a></h3><div class="highlight"><pre><span></span>scontrol<span class="w"> </span>show<span class="w"> </span>nodes
-</pre></div>
+<h3 id="View-Detailed-Node-Hardware-Specifications">View Detailed Node Hardware Specifications<a class="anchor-link" href="#View-Detailed-Node-Hardware-Specifications">&#182;</a></h3><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF"> scontrol show nodes </code></p>
 <p><strong>Command breakdown:</strong></p>
 <ul>
 <li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">scontrol</code> — SLURM control utility for viewing and modifying cluster configuration</li>
@@ -13182,8 +13180,7 @@ div#notebook {
 </ul>
 <p><strong>Use case:</strong> Obtain detailed hardware-level information about cluster resources for resource planning and job optimization.</p>
 <hr>
-<h3 id="Generate-Resource-Summary-Report">Generate Resource Summary Report<a class="anchor-link" href="#Generate-Resource-Summary-Report">&#182;</a></h3><div class="highlight"><pre><span></span>sinfo<span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;%P %N %t %C %m %G&quot;</span>
-</pre></div>
+<h3 id="Generate-Resource-Summary-Report">Generate Resource Summary Report<a class="anchor-link" href="#Generate-Resource-Summary-Report">&#182;</a></h3><p><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">sinfo -o "%P %N %t %C %m %G"</code></p>
 <p><strong>Command breakdown:</strong></p>
 <ul>
 <li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">sinfo</code> — Display node and partition information</li>
