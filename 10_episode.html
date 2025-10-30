@@ -13118,6 +13118,7 @@ This submission script automates the process of running ORCA 6.1.0 using <strong
 <span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
 
 <span class="c1"># Defaults</span>
+
 <span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_NPROCS</span><span class="o">=</span><span class="m">12</span>
 <span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_TIME</span><span class="o">=</span><span class="s2">&quot;3-00:00:00&quot;</span>
 <span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_PARTITION</span><span class="o">=</span><span class="s2">&quot;chemistry&quot;</span>
@@ -13127,7 +13128,8 @@ This submission script automates the process of running ORCA 6.1.0 using <strong
 <span class="nv">time</span><span class="o">=</span><span class="si">${</span><span class="nv">DEFAULT_TIME</span><span class="si">}</span>
 <span class="nv">partition</span><span class="o">=</span><span class="si">${</span><span class="nv">DEFAULT_PARTITION</span><span class="si">}</span>
 
-usage<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+usage<span class="o">()</span><span class="w"> </span>
+<span class="o">{</span>
 <span class="w">    </span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
 <span class="s">ORCA 6.1.0 Job Submission Script (PMIx-Enabled)</span>
 
@@ -13142,7 +13144,8 @@ usage<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 <span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 <span class="o">}</span>
 
-validate_input<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+validate_input<span class="o">()</span><span class="w"> </span>
+<span class="o">{</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nprocs</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+$<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nprocs</span><span class="s2">&quot;</span><span class="w"> </span>-le<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: Number of cores must be a positive integer&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
@@ -13158,7 +13161,8 @@ validate_input<span class="o">()</span><span class="w"> </span><span class="o">{
 <span class="w">    </span><span class="k">fi</span>
 <span class="o">}</span>
 
-check_file_exists<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+check_file_exists<span class="o">()</span>
+<span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">file</span><span class="o">=</span><span class="nv">$1</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: File not found or not readable: </span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
@@ -13167,12 +13171,14 @@ check_file_exists<span class="o">()</span><span class="w"> </span><span class="o
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
 <span class="o">}</span>
 
-create_job_script<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+create_job_script<span class="o">()</span>
+<span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">infile</span><span class="o">=</span><span class="nv">$1</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">head</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">infile</span><span class="p">%.*</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">job_script</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">.slm&quot;</span>
 
 <span class="w">    </span>cat<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span><span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+
 <span class="s">#!/bin/bash</span>
 <span class="s">#SBATCH --job-name=HEAD_PLACEHOLDER</span>
 <span class="s">#SBATCH --partition=PARTITION_PLACEHOLDER</span>
@@ -13186,16 +13192,19 @@ create_job_script<span class="o">()</span><span class="w"> </span><span class="o
 <span class="s">set -euo pipefail</span>
 
 <span class="s"># Load modules</span>
+
 <span class="s">module purge</span>
 <span class="s">module load GCC/15.1.0 openmpi/4.1.6</span>
 <span class="s">module load orca/6.1.0</span>
 
 <span class="s"># PMIx configuration</span>
+
 <span class="s">export SLURM_MPI_TYPE=pmix</span>
 <span class="s">export OMPI_MCA_pmix_base_verbose=0</span>
 <span class="s">export ORCA_MPI_RSH=&quot;srun&quot;</span>
 
 <span class="s"># Setup paths</span>
+
 <span class="s">logfile=&quot;$(pwd)/HEAD_PLACEHOLDER.out&quot;</span>
 <span class="s">workdir=&quot;$(pwd)&quot;</span>
 <span class="s">tempdir=&quot;/tmp/jobs/${SLURM_JOB_ID}/HEAD_PLACEHOLDER.files&quot;</span>
@@ -13205,10 +13214,12 @@ create_job_script<span class="o">()</span><span class="w"> </span><span class="o
 <span class="s">cd &quot;$tempdir&quot; || { echo &quot;ERROR: Cannot change to temp directory&quot;; exit 1; }</span>
 
 <span class="s"># Run ORCA</span>
+
 <span class="s">$(which orca) INFILE_PLACEHOLDER 1&gt;&gt;&quot;$logfile&quot; 2&gt;&amp;1</span>
 <span class="s">orca_exit=$?</span>
 
 <span class="s"># Cleanup and copy results</span>
+
 <span class="s">find &quot;$tempdir&quot; -maxdepth 1 -type f -name &quot;*.tmp*&quot; -delete</span>
 <span class="s">cp -Rf &quot;$tempdir&quot;/* &quot;$workdir/&quot; || { echo &quot;ERROR: Cannot copy results back&quot;; exit 1; }</span>
 
@@ -13216,6 +13227,7 @@ create_job_script<span class="o">()</span><span class="w"> </span><span class="o
 <span class="s">EOF</span>
 
 <span class="w">    </span><span class="c1"># Replace placeholders</span>
+
 <span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|HEAD_PLACEHOLDER|</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
 <span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|PARTITION_PLACEHOLDER|</span><span class="si">${</span><span class="nv">partition</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
 <span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|TIME_PLACEHOLDER|</span><span class="si">${</span><span class="nv">time</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
@@ -13227,6 +13239,7 @@ create_job_script<span class="o">()</span><span class="w"> </span><span class="o
 <span class="o">}</span>
 
 <span class="c1"># Parse arguments</span>
+
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">    </span>usage
 <span class="k">fi</span>
@@ -13255,6 +13268,7 @@ validate_input
 <span class="k">fi</span>
 
 <span class="c1"># Process files</span>
+
 <span class="nv">submitted_jobs</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">failed_jobs</span><span class="o">=</span><span class="m">0</span>
 
