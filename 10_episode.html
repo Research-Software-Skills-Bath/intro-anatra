@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <link rel="icon" type="image/png" href="css/favicon.png"/>
 
-<title>06_episode</title>
+<title>10_episode</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13094,93 +13094,145 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Running-Gaussian-Jobs">Running Gaussian Jobs<a class="anchor-link" href="#Running-Gaussian-Jobs">&#182;</a></h1><h2 id="Gaussian-09">Gaussian 09<a class="anchor-link" href="#Gaussian-09">&#182;</a></h2><p>Below is an example script for an Gaussian09 job, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<h1 id="&#129514;-Running-ORCA-Jobs">&#129514; Running ORCA Jobs<a class="anchor-link" href="#&#129514;-Running-ORCA-Jobs">&#182;</a></h1><hr>
+<h2 id="1&#65039;&#8419;-What-is-ORCA?">1&#65039;&#8419; What is ORCA?<a class="anchor-link" href="#1&#65039;&#8419;-What-is-ORCA?">&#182;</a></h2><p><strong>ORCA</strong> is a powerful <strong>quantum chemistry software package</strong> developed by the Max Planck Institute for Chemical Energy Conversion.<br>
+It is widely used for performing <strong>electronic structure calculations</strong> and supports a wide range of computational chemistry methods such as:</p>
+<ul>
+<li><strong>Density Functional Theory (DFT)</strong></li>
+<li><strong>Hartree–Fock (HF)</strong> and <strong>post-HF</strong> methods (MP2, CCSD, etc.)</li>
+<li><strong>Geometry optimization</strong>, <strong>vibrational frequency analysis</strong>, and <strong>excited-state simulations</strong></li>
+</ul>
+<p>ORCA can efficiently utilize multiple CPU cores via <strong>MPI (Message Passing Interface)</strong> on our Anatra HPC cluster.<br>
+This submission script automates the process of running ORCA 6.1.0 using <strong>Slurm</strong> with <strong>OpenMPI</strong>, providing researchers with a reliable and reproducible workflow for large-scale quantum chemistry simulations.</p>
+<hr>
+<h2 id="2&#65039;&#8419;-Full-Script">2&#65039;&#8419; Full Script<a class="anchor-link" href="#2&#65039;&#8419;-Full-Script">&#182;</a></h2><p>```bash</p>
+<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><p>set -euo pipefail</p>
+<h1 id="Defaults">Defaults<a class="anchor-link" href="#Defaults">&#182;</a></h1><p>readonly DEFAULT_NPROCS=12
+readonly DEFAULT_TIME="3-00:00:00"
+readonly DEFAULT_PARTITION="chemistry"
+readonly MAX_PROCS=96</p>
+<p>nprocs=${DEFAULT_NPROCS}
+time=${DEFAULT_TIME}
+partition=${DEFAULT_PARTITION}</p>
+<p>usage() {
+    cat &lt;&lt; EOF
+ORCA 6.1.0 Job Submission Script (PMIx-Enabled)</p>
+<p>USAGE: $(basename $0) <input_file> [input_file ...] [OPTIONS]</p>
+<p>OPTIONS:
+    -n <cores>      Number of CPU cores (default: ${DEFAULT_NPROCS}, max: ${MAX_PROCS})
+    -t <time>       Time limit in dd-hh:mm:ss (default: ${DEFAULT_TIME})
+    -p &lt;partition&gt;  SLURM partition (default: ${DEFAULT_PARTITION})
+    -h              Display this help message
+EOF
+    exit 0
+}</p>
+<p>validate_input() {
+    if ! [[ "$nprocs" =~ ^[0-9]+$ ]] || [ "$nprocs" -le 0 ]; then
+        echo "ERROR: Number of cores must be a positive integer" &gt;&amp;2
+        exit 1
+    fi</p>
 
-<span class="c1">#SBATCH --job-name=g09-test</span>
-<span class="c1">#SBATCH --account=[your-account]</span>
+<pre><code style="">if [ "$nprocs" -gt "$MAX_PROCS" ]; then
+    nprocs=$MAX_PROCS
+fi
 
-<span class="c1">#SBATCH --partition=nodes</span>
-<span class="c1">#SBATCH --output=%j.out</span>
-<span class="c1">#SBATCH --error=%j.err</span>
+if ! [[ "$time" =~ ^[0-9]+-[0-9]{2}:[0-9]{2}:[0-9]{2}$ ]]; then
+    echo "ERROR: Invalid time format. Use dd-hh:mm:ss" &gt;&amp;2
+    exit 1
+fi
+</code></pre>
+<p>}</p>
+<p>check_file_exists() {
+    local file=$1
+    if [ ! -f "$file" ] || [ ! -r "$file" ]; then
+        echo "ERROR: File not found or not readable: $file" &gt;&amp;2
+        return 1
+    fi
+    return 0
+}</p>
+<p>create_job_script() {
+    local infile=$1
+    local head="${infile%.*}"
+    local job_script="${head}.slm"</p>
 
-<span class="c1"># Job time</span>
-<span class="c1">#SBATCH --time=1-0            # 1 day. Max wall time is 3 days</span>
+<pre><code style="">cat &gt; "$job_script" &lt;&lt;'EOF'
+</code></pre>
+<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><h1 id="SBATCH---job-name=HEAD_PLACEHOLDER">SBATCH --job-name=HEAD_PLACEHOLDER<a class="anchor-link" href="#SBATCH---job-name=HEAD_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---partition=PARTITION_PLACEHOLDER">SBATCH --partition=PARTITION_PLACEHOLDER<a class="anchor-link" href="#SBATCH---partition=PARTITION_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---output=HEAD_PLACEHOLDER.%j.out">SBATCH --output=HEAD_PLACEHOLDER.%j.out<a class="anchor-link" href="#SBATCH---output=HEAD_PLACEHOLDER.%j.out">&#182;</a></h1><h1 id="SBATCH---error=HEAD_PLACEHOLDER.%j.err">SBATCH --error=HEAD_PLACEHOLDER.%j.err<a class="anchor-link" href="#SBATCH---error=HEAD_PLACEHOLDER.%j.err">&#182;</a></h1><h1 id="SBATCH---time=TIME_PLACEHOLDER">SBATCH --time=TIME_PLACEHOLDER<a class="anchor-link" href="#SBATCH---time=TIME_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---nodes=1">SBATCH --nodes=1<a class="anchor-link" href="#SBATCH---nodes=1">&#182;</a></h1><h1 id="SBATCH---ntasks=NPROCS_PLACEHOLDER">SBATCH --ntasks=NPROCS_PLACEHOLDER<a class="anchor-link" href="#SBATCH---ntasks=NPROCS_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---cpus-per-task=1">SBATCH --cpus-per-task=1<a class="anchor-link" href="#SBATCH---cpus-per-task=1">&#182;</a></h1><p>set -euo pipefail</p>
+<h1 id="Load-modules">Load modules<a class="anchor-link" href="#Load-modules">&#182;</a></h1><p>module purge
+module load GCC/15.1.0 openmpi/4.1.6
+module load orca/6.1.0</p>
+<h1 id="PMIx-configuration">PMIx configuration<a class="anchor-link" href="#PMIx-configuration">&#182;</a></h1><p>export SLURM_MPI_TYPE=pmix
+export OMPI_MCA_pmix_base_verbose=0
+export ORCA_MPI_RSH="srun"</p>
+<h1 id="Setup-paths">Setup paths<a class="anchor-link" href="#Setup-paths">&#182;</a></h1><p>logfile="$(pwd)/HEAD_PLACEHOLDER.out"
+workdir="$(pwd)"
+tempdir="/tmp/jobs/${SLURM_JOB_ID}/HEAD_PLACEHOLDER.files"</p>
+<p>mkdir -p "$tempdir" || { echo "ERROR: Cannot create temp directory"; exit 1; }
+cp "$workdir/HEAD_PLACEHOLDER"* "$tempdir" || { echo "ERROR: Cannot copy input files"; exit 1; }
+cd "$tempdir" || { echo "ERROR: Cannot change to temp directory"; exit 1; }</p>
+<h1 id="Run-ORCA">Run ORCA<a class="anchor-link" href="#Run-ORCA">&#182;</a></h1><p>$(which orca) INFILE_PLACEHOLDER 1&gt;&gt;"$logfile" 2&gt;&amp;1
+orca_exit=$?</p>
+<h1 id="Cleanup-and-copy-results">Cleanup and copy results<a class="anchor-link" href="#Cleanup-and-copy-results">&#182;</a></h1><p>find "$tempdir" -maxdepth 1 -type f -name "*.tmp*" -delete
+cp -Rf "$tempdir"/* "$workdir/" || { echo "ERROR: Cannot copy results back"; exit 1; }</p>
+<p>exit $orca_exit
+EOF</p>
 
-<span class="c1">#SBATCH --mem-per-cpu=2700    # Requesting more memory than this will</span>
-<span class="w">                              </span><span class="c1"># allocate more CPUS to the job</span>
+<pre><code style=""># Replace placeholders
+sed -i "s|HEAD_PLACEHOLDER|${head}|g" "$job_script"
+sed -i "s|PARTITION_PLACEHOLDER|${partition}|g" "$job_script"
+sed -i "s|TIME_PLACEHOLDER|${time}|g" "$job_script"
+sed -i "s|NPROCS_PLACEHOLDER|${nprocs}|g" "$job_script"
+sed -i "s|INFILE_PLACEHOLDER|${infile}|g" "$job_script"
 
-<span class="c1">## Gaussian uses single nodes</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks=1</span>
-<span class="c1">#SBATCH --cpus-per-task=12</span>
+chmod +x "$job_script"
+echo "$job_script"
+</code></pre>
+<p>}</p>
+<h1 id="Parse-arguments">Parse arguments<a class="anchor-link" href="#Parse-arguments">&#182;</a></h1><p>if [ $# -eq 0 ]; then
+    usage
+fi</p>
+<p>files=()
+while [[ $# -gt 0 &amp;&amp; "$1" == *.inp ]]; do
+    files+=("$1")
+    shift
+done</p>
+<p>while getopts "n:t:p:h" opt; do
+    case "$opt" in
+        n) nprocs=$OPTARG ;;
+        t) time=$OPTARG ;;
+        p) partition=$OPTARG ;;
+        h) usage ;;
+        *) usage ;;
+    esac
+done</p>
+<p>validate_input</p>
+<p>if [ ${#files[@]} -eq 0 ]; then
+    echo "ERROR: No input files provided" &gt;&amp;2
+    usage
+fi</p>
+<h1 id="Process-files">Process files<a class="anchor-link" href="#Process-files">&#182;</a></h1><p>submitted_jobs=0
+failed_jobs=0</p>
+<p>for infile in "${files[@]}"; do
+    if [[ "$infile" == *.inp ]]; then
+        if ! check_file_exists "$infile"; then
+            ((failed_jobs++))
+            continue
+        fi</p>
 
-module<span class="w"> </span>purge
-module<span class="w"> </span>load<span class="w"> </span>gaussian/09/A.02
+<pre><code style="">    job_script=$(create_job_script "$infile")
 
-<span class="nb">source</span><span class="w"> </span><span class="nv">$g09profile</span>
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_MEM_PER_CPU</span><span class="o">*</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="k">))</span>MB
-
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_SCRDIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_PDEF</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_MDEF</span>
-
-<span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
-
-mkdir<span class="w"> </span>-p<span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-cp<span class="w"> </span><span class="nv">$infile</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
-<span class="nb">cd</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
-
-g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$infile</span><span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span>output.log
-</pre></div>
-<h2 id="Gaussian-16">Gaussian 16<a class="anchor-link" href="#Gaussian-16">&#182;</a></h2><p>Below is an example script for an Ansys run, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
-<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
-
-<span class="c1">#SBATCH --job-name=g16-test</span>
-<span class="c1">#SBATCH --account=[your-account]</span>
-
-<span class="c1">#SBATCH --partition=chemistry</span>
-<span class="c1">#SBATCH --output=%j.out</span>
-<span class="c1">#SBATCH --error=%j.err</span>
-
-<span class="c1"># Job time</span>
-<span class="c1">#SBATCH --time=1-0            # 1 day. Max wall time is 3 days</span>
-
-<span class="c1">#SBATCH --mem-per-cpu=2700    # Requesting more memory than this will</span>
-<span class="w">                              </span><span class="c1"># allocate more CPUS to the job</span>
-
-<span class="c1">## Gaussian uses single nodes</span>
-<span class="c1">#SBATCH --nodes=1</span>
-<span class="c1">#SBATCH --ntasks=1</span>
-<span class="c1">#SBATCH --cpus-per-task=12</span>
-
-module<span class="w"> </span>purge
-module<span class="w"> </span>load<span class="w"> </span>gaussian/16/C.01
-
-<span class="nb">source</span><span class="w"> </span><span class="nv">$g16profile</span>
-
-<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_MEM_PER_CPU</span><span class="o">*</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="k">))</span>MB
-
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_SCRDIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_PDEF</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_MDEF</span>
-
-<span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
-
-mkdir<span class="w"> </span>-p<span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-cp<span class="w"> </span><span class="nv">$infile</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
-<span class="nb">cd</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
-
-g16<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$infile</span><span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span>output.log
-</pre></div>
-<p>Assuming these files are saved as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">example.slm</code> then they can be submitted with the command:</p>
-<div class="highlight"><pre><span></span><span class="go">sbatch example.slm</span>
-</pre></div>
+    if job_id=$(sbatch "$job_script" 2&gt;&amp;1); then
+        echo "Submitted: $infile -&gt; $job_id"
+        ((submitted_jobs++))
+    else
+        echo "Failed: $infile" &gt;&amp;2
+        ((failed_jobs++))
+    fi
+fi
+</code></pre>
+<p>done</p>
+<p>echo "Summary: $submitted_jobs submitted, $failed_jobs failed"
+exit 0</p>
 
 </div>
 </div>
@@ -13188,15 +13240,51 @@ g16<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="GAUSS_SCRDIR">GAUSS_SCRDIR<a class="anchor-link" href="#GAUSS_SCRDIR">&#182;</a></h2><p>As part of the prejob commands for slurm, a temporary directory is created in <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/tmp/jobs/[id]</code>, where <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">[id]</code> is the slurm id of the job. This directory is automatically exported as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">$GAUSS_SCRDIR</code> and should not be altered. This both improves performance of your job by performing write-heavy operations on the local NVMe drives of the compute node, prevents <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch</code> from being slowed down, and cleans up files for you after jobs have completed.</p>
-<p>If for some reason you need these files, you have read access to this directory during the job but files will be deleted at the end of the slurm job.</p>
+<h3 id="ORCA-Job-Submission-Guide-for-HPC-Cluster">ORCA Job Submission Guide for HPC Cluster<a class="anchor-link" href="#ORCA-Job-Submission-Guide-for-HPC-Cluster">&#182;</a></h3><h2 id="3&#65039;&#8419;-How-to-Run-the-Script">3&#65039;&#8419; How to Run the Script<a class="anchor-link" href="#3&#65039;&#8419;-How-to-Run-the-Script">&#182;</a></h2><p>Follow these steps to run your ORCA jobs using this submission script on the HPC cluster.</p>
+<hr>
+<h3 id="&#129513;-Step-1-&#8212;-Save-the-Script">&#129513; Step 1 &#8212; Save the Script<a class="anchor-link" href="#&#129513;-Step-1-&#8212;-Save-the-Script">&#182;</a></h3><p>Save the code above as:</p>
+<div class="highlight"><pre><span></span>submit_orca.sh
+</pre></div>
+<p>Then make it executable:</p>
+<div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>submit_orca.sh
+</pre></div>
+<hr>
+<h3 id="&#129514;-Step-2-&#8212;-Prepare-Your-Input-File">&#129514; Step 2 &#8212; Prepare Your Input File<a class="anchor-link" href="#&#129514;-Step-2-&#8212;-Prepare-Your-Input-File">&#182;</a></h3><p>Create your ORCA input file, for example:</p>
+<div class="highlight"><pre><span></span>molecule.inp
+</pre></div>
+<hr>
+<h3 id="&#128640;-Step-3-&#8212;-Submit-a-Job">&#128640; Step 3 &#8212; Submit a Job<a class="anchor-link" href="#&#128640;-Step-3-&#8212;-Submit-a-Job">&#182;</a></h3><p>Submit a single job:</p>
+<div class="highlight"><pre><span></span>./submit_orca.sh<span class="w"> </span>molecule.inp<span class="w"> </span>-n<span class="w"> </span><span class="m">24</span><span class="w"> </span>-t<span class="w"> </span><span class="m">2</span>-00:00:00<span class="w"> </span>-p<span class="w"> </span>chemistry
+</pre></div>
+<p>Or multiple jobs:</p>
+<div class="highlight"><pre><span></span>./submit_orca.sh<span class="w"> </span>job1.inp<span class="w"> </span>job2.inp<span class="w"> </span>-n<span class="w"> </span><span class="m">16</span><span class="w"> </span>-t<span class="w"> </span><span class="m">1</span>-12:00:00
+</pre></div>
+<hr>
+<h3 id="&#128202;-Step-4-&#8212;-Monitor-Job-Progress">&#128202; Step 4 &#8212; Monitor Job Progress<a class="anchor-link" href="#&#128202;-Step-4-&#8212;-Monitor-Job-Progress">&#182;</a></h3><p>Check the status of your jobs:</p>
+<div class="highlight"><pre><span></span>squeue<span class="w"> </span>-u<span class="w"> </span><span class="nv">$USER</span>
+</pre></div>
+<p>To view output logs:</p>
+<div class="highlight"><pre><span></span>cat<span class="w"> </span>molecule.%j.out
+</pre></div>
+<hr>
+<h3 id="&#129517;-Step-5-&#8212;-Cancel-a-Job-(if-needed)">&#129517; Step 5 &#8212; Cancel a Job (if needed)<a class="anchor-link" href="#&#129517;-Step-5-&#8212;-Cancel-a-Job-(if-needed)">&#182;</a></h3><p>Cancel a specific job:</p>
+<div class="highlight"><pre><span></span>scancel<span class="w"> </span>&lt;job_id&gt;
+</pre></div>
+<hr>
+<h3 id="&#128194;-Step-6-&#8212;-Check-Output-Files">&#128194; Step 6 &#8212; Check Output Files<a class="anchor-link" href="#&#128194;-Step-6-&#8212;-Check-Output-Files">&#182;</a></h3><p>After the job finishes, the following files will appear in your working directory:</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<pre><code style="">molecule.out
+molecule.%j.out
+molecule.%j.err
+molecule.gbw</code></pre>
+<p>These files contain ORCA's output data and calculation logs.</p>
+<hr>
+<h2 id="&#128221;-Notes">&#128221; Notes<a class="anchor-link" href="#&#128221;-Notes">&#182;</a></h2><ul>
+<li>Replace <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">&lt;job_id&gt;</code> with your actual SLURM job ID when canceling jobs</li>
+<li>The <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">%j</code> in filenames will be automatically replaced with your job ID number</li>
+<li>Adjust the number of cores (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-n</code>) and time limit (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-t</code>) based on your calculation requirements</li>
+<li>Make sure to specify the correct partition (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-p</code>) for your institution's HPC setup</li>
+</ul>
 
 </div>
 </div>
@@ -13205,9 +13293,9 @@ g16<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <div class="w3-bar w3-blue-grey">
-<a href="./05_episode.html" class="w3-left-align w3-bar-item w3-button w3-mobile" style="width:33%"><h2><i class="fa fa-angle-double-left"></i> Previous</h2></a>
+<a href="./09_episode.html" class="w3-left-align w3-bar-item w3-button w3-mobile" style="width:33%"><h2><i class="fa fa-angle-double-left"></i> Previous</h2></a>
 <a href="./00_schedule.html" class="w3-bar-item w3-button w3-center w3-mobile" style="width:33%"><h2>Schedule</h2></a>
-<a href="./07_episode.html" class="w3-right-align w3-bar-item w3-button w3-right w3-mobile" style="width:33%"><h2>Next <i class="fa fa-angle-double-right"></i></h2></a>
+<a href="./00_schedule.html" class="w3-right-align w3-bar-item w3-button w3-right w3-mobile" style="width:33%"><h2>Next <i class="fa fa-angle-double-right"></i></h2></a>
 </div>
 </div>
 </div>
