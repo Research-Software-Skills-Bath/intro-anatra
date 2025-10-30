@@ -13109,142 +13109,182 @@ This submission script automates the process of running ORCA 6.1.0 using <strong
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="ORCA-Script">ORCA Script<a class="anchor-link" href="#ORCA-Script">&#182;</a></h1><hr>
-<p>```bash</p>
-<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><p>set -euo pipefail</p>
-<h1 id="Defaults">Defaults<a class="anchor-link" href="#Defaults">&#182;</a></h1><p>readonly DEFAULT_NPROCS=12
-readonly DEFAULT_TIME="3-00:00:00"
-readonly DEFAULT_PARTITION="chemistry"
-readonly MAX_PROCS=96</p>
-<p>nprocs=${DEFAULT_NPROCS}
-time=${DEFAULT_TIME}
-partition=${DEFAULT_PARTITION}</p>
-<p>usage() {
-    cat &lt;&lt; EOF
-ORCA 6.1.0 Job Submission Script (PMIx-Enabled)</p>
-<p>USAGE: $(basename $0) <input_file> [input_file ...] [OPTIONS]</p>
-<p>OPTIONS:
-    -n <cores>      Number of CPU cores (default: ${DEFAULT_NPROCS}, max: ${MAX_PROCS})
-    -t <time>       Time limit in dd-hh:mm:ss (default: ${DEFAULT_TIME})
-    -p &lt;partition&gt;  SLURM partition (default: ${DEFAULT_PARTITION})
-    -h              Display this help message
-EOF
-    exit 0
-}</p>
-<p>validate_input() {
-    if ! [[ "$nprocs" =~ ^[0-9]+$ ]] || [ "$nprocs" -le 0 ]; then
-        echo "ERROR: Number of cores must be a positive integer" &gt;&amp;2
-        exit 1
-    fi</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span> <span class="o">-</span><span class="n">euo</span> <span class="n">pipefail</span>
 
-<pre><code style="">if [ "$nprocs" -gt "$MAX_PROCS" ]; then
-    nprocs=$MAX_PROCS
-fi
+<span class="c1"># Defaults</span>
+<span class="n">readonly</span> <span class="n">DEFAULT_NPROCS</span><span class="o">=</span><span class="mi">12</span>
+<span class="n">readonly</span> <span class="n">DEFAULT_TIME</span><span class="o">=</span><span class="s2">&quot;3-00:00:00&quot;</span>
+<span class="n">readonly</span> <span class="n">DEFAULT_PARTITION</span><span class="o">=</span><span class="s2">&quot;chemistry&quot;</span>
+<span class="n">readonly</span> <span class="n">MAX_PROCS</span><span class="o">=</span><span class="mi">96</span>
 
-if ! [[ "$time" =~ ^[0-9]+-[0-9]{2}:[0-9]{2}:[0-9]{2}$ ]]; then
-    echo "ERROR: Invalid time format. Use dd-hh:mm:ss" &gt;&amp;2
-    exit 1
-fi
-</code></pre>
-<p>}</p>
-<p>check_file_exists() {
-    local file=$1
-    if [ ! -f "$file" ] || [ ! -r "$file" ]; then
-        echo "ERROR: File not found or not readable: $file" &gt;&amp;2
-        return 1
-    fi
-    return 0
-}</p>
-<p>create_job_script() {
-    local infile=$1
-    local head="${infile%.*}"
-    local job_script="${head}.slm"</p>
+<span class="n">nprocs</span><span class="o">=</span><span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_NPROCS</span><span class="p">}</span>
+<span class="n">time</span><span class="o">=</span><span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_TIME</span><span class="p">}</span>
+<span class="n">partition</span><span class="o">=</span><span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_PARTITION</span><span class="p">}</span>
 
-<pre><code style="">cat &gt; "$job_script" &lt;&lt;'EOF'
+<span class="n">usage</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">cat</span> <span class="o">&lt;&lt;</span> <span class="n">EOF</span>
+<span class="n">ORCA</span> <span class="mf">6.1.0</span> <span class="n">Job</span> <span class="n">Submission</span> <span class="n">Script</span> <span class="p">(</span><span class="n">PMIx</span><span class="o">-</span><span class="n">Enabled</span><span class="p">)</span>
 
-</code></pre>
-<h1 id="!/bin/bash">!/bin/bash<a class="anchor-link" href="#!/bin/bash">&#182;</a></h1><h1 id="SBATCH---job-name=HEAD_PLACEHOLDER">SBATCH --job-name=HEAD_PLACEHOLDER<a class="anchor-link" href="#SBATCH---job-name=HEAD_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---partition=PARTITION_PLACEHOLDER">SBATCH --partition=PARTITION_PLACEHOLDER<a class="anchor-link" href="#SBATCH---partition=PARTITION_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---output=HEAD_PLACEHOLDER.%j.out">SBATCH --output=HEAD_PLACEHOLDER.%j.out<a class="anchor-link" href="#SBATCH---output=HEAD_PLACEHOLDER.%j.out">&#182;</a></h1><h1 id="SBATCH---error=HEAD_PLACEHOLDER.%j.err">SBATCH --error=HEAD_PLACEHOLDER.%j.err<a class="anchor-link" href="#SBATCH---error=HEAD_PLACEHOLDER.%j.err">&#182;</a></h1><h1 id="SBATCH---time=TIME_PLACEHOLDER">SBATCH --time=TIME_PLACEHOLDER<a class="anchor-link" href="#SBATCH---time=TIME_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---nodes=1">SBATCH --nodes=1<a class="anchor-link" href="#SBATCH---nodes=1">&#182;</a></h1><h1 id="SBATCH---ntasks=NPROCS_PLACEHOLDER">SBATCH --ntasks=NPROCS_PLACEHOLDER<a class="anchor-link" href="#SBATCH---ntasks=NPROCS_PLACEHOLDER">&#182;</a></h1><h1 id="SBATCH---cpus-per-task=1">SBATCH --cpus-per-task=1<a class="anchor-link" href="#SBATCH---cpus-per-task=1">&#182;</a></h1><p>set -euo pipefail</p>
-<h1 id="Load-modules">Load modules<a class="anchor-link" href="#Load-modules">&#182;</a></h1><p>module purge
-module load GCC/15.1.0 openmpi/4.1.6
-module load orca/6.1.0</p>
-<h1 id="PMIx-configuration">PMIx configuration<a class="anchor-link" href="#PMIx-configuration">&#182;</a></h1><p>export SLURM_MPI_TYPE=pmix
-export OMPI_MCA_pmix_base_verbose=0
-export ORCA_MPI_RSH="srun"</p>
-<h1 id="Setup-paths">Setup paths<a class="anchor-link" href="#Setup-paths">&#182;</a></h1><p>logfile="$(pwd)/HEAD_PLACEHOLDER.out"
-workdir="$(pwd)"
-tempdir="/tmp/jobs/${SLURM_JOB_ID}/HEAD_PLACEHOLDER.files"</p>
-<p>mkdir -p "$tempdir" || { echo "ERROR: Cannot create temp directory"; exit 1; }
-cp "$workdir/HEAD_PLACEHOLDER"* "$tempdir" || { echo "ERROR: Cannot copy input files"; exit 1; }
-cd "$tempdir" || { echo "ERROR: Cannot change to temp directory"; exit 1; }</p>
-<h1 id="Run-ORCA">Run ORCA<a class="anchor-link" href="#Run-ORCA">&#182;</a></h1><p>$(which orca) INFILE_PLACEHOLDER 1&gt;&gt;"$logfile" 2&gt;&amp;1
-orca_exit=$?</p>
-<h1 id="Cleanup-and-copy-results">Cleanup and copy results<a class="anchor-link" href="#Cleanup-and-copy-results">&#182;</a></h1><p>find "$tempdir" -maxdepth 1 -type f -name "*.tmp*" -delete
-cp -Rf "$tempdir"/* "$workdir/" || { echo "ERROR: Cannot copy results back"; exit 1; }</p>
-<p>exit $orca_exit
-EOF</p>
+<span class="n">USAGE</span><span class="p">:</span> <span class="err">$</span><span class="p">(</span><span class="n">basename</span> <span class="err">$</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;</span> <span class="p">[</span><span class="n">input_file</span> <span class="o">...</span><span class="p">]</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span>
 
-<pre><code style=""># Replace placeholders
-sed -i "s|HEAD_PLACEHOLDER|${head}|g" "$job_script"
-sed -i "s|PARTITION_PLACEHOLDER|${partition}|g" "$job_script"
-sed -i "s|TIME_PLACEHOLDER|${time}|g" "$job_script"
-sed -i "s|NPROCS_PLACEHOLDER|${nprocs}|g" "$job_script"
-sed -i "s|INFILE_PLACEHOLDER|${infile}|g" "$job_script"
+<span class="n">OPTIONS</span><span class="p">:</span>
+    <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">cores</span><span class="o">&gt;</span>      <span class="n">Number</span> <span class="n">of</span> <span class="n">CPU</span> <span class="n">cores</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_NPROCS</span><span class="p">},</span> <span class="nb">max</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">MAX_PROCS</span><span class="p">})</span>
+    <span class="o">-</span><span class="n">t</span> <span class="o">&lt;</span><span class="n">time</span><span class="o">&gt;</span>       <span class="n">Time</span> <span class="n">limit</span> <span class="ow">in</span> <span class="n">dd</span><span class="o">-</span><span class="n">hh</span><span class="p">:</span><span class="n">mm</span><span class="p">:</span><span class="n">ss</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_TIME</span><span class="p">})</span>
+    <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">partition</span><span class="o">&gt;</span>  <span class="n">SLURM</span> <span class="n">partition</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="err">$</span><span class="p">{</span><span class="n">DEFAULT_PARTITION</span><span class="p">})</span>
+    <span class="o">-</span><span class="n">h</span>              <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span>
+<span class="n">EOF</span>
+    <span class="n">exit</span> <span class="mi">0</span>
+<span class="p">}</span>
 
-chmod +x "$job_script"
-echo "$job_script"
-</code></pre>
-<p>}</p>
-<h1 id="Parse-arguments">Parse arguments<a class="anchor-link" href="#Parse-arguments">&#182;</a></h1><p>if [ $# -eq 0 ]; then
-    usage
-fi</p>
-<p>files=()
-while [[ $# -gt 0 &amp;&amp; "$1" == *.inp ]]; do
-    files+=("$1")
-    shift
-done</p>
-<p>while getopts "n:t:p:h" opt; do
-    case "$opt" in
-        n) nprocs=$OPTARG ;;
-        t) time=$OPTARG ;;
-        p) partition=$OPTARG ;;
-        h) usage ;;
-        *) usage ;;
-    esac
-done</p>
-<p>validate_input</p>
-<p>if [ ${#files[@]} -eq 0 ]; then
-    echo "ERROR: No input files provided" &gt;&amp;2
-    usage
-fi</p>
-<h1 id="Process-files">Process files<a class="anchor-link" href="#Process-files">&#182;</a></h1><p>submitted_jobs=0
-failed_jobs=0</p>
-<p>for infile in "${files[@]}"; do
-    if [[ "$infile" == *.inp ]]; then
-        if ! check_file_exists "$infile"; then
-            ((failed_jobs++))
-            continue
-        fi</p>
+<span class="n">validate_input</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="err">!</span> <span class="p">[[</span> <span class="s2">&quot;$nprocs&quot;</span> <span class="o">=~</span> <span class="o">^</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span><span class="err">$</span> <span class="p">]]</span> <span class="o">||</span> <span class="p">[</span> <span class="s2">&quot;$nprocs&quot;</span> <span class="o">-</span><span class="n">le</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">echo</span> <span class="s2">&quot;ERROR: Number of cores must be a positive integer&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
+        <span class="n">exit</span> <span class="mi">1</span>
+    <span class="n">fi</span>
+    
+    <span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$nprocs&quot;</span> <span class="o">-</span><span class="n">gt</span> <span class="s2">&quot;$MAX_PROCS&quot;</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">nprocs</span><span class="o">=</span><span class="err">$</span><span class="n">MAX_PROCS</span>
+    <span class="n">fi</span>
+    
+    <span class="k">if</span> <span class="err">!</span> <span class="p">[[</span> <span class="s2">&quot;$time&quot;</span> <span class="o">=~</span> <span class="o">^</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+-</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]{</span><span class="mi">2</span><span class="p">}:[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]{</span><span class="mi">2</span><span class="p">}:[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]{</span><span class="mi">2</span><span class="p">}</span><span class="err">$</span> <span class="p">]];</span> <span class="n">then</span>
+        <span class="n">echo</span> <span class="s2">&quot;ERROR: Invalid time format. Use dd-hh:mm:ss&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
+        <span class="n">exit</span> <span class="mi">1</span>
+    <span class="n">fi</span>
+<span class="p">}</span>
 
-<pre><code style="">    job_script=$(create_job_script "$infile")
+<span class="n">check_file_exists</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">local</span> <span class="n">file</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="err">!</span> <span class="o">-</span><span class="n">f</span> <span class="s2">&quot;$file&quot;</span> <span class="p">]</span> <span class="o">||</span> <span class="p">[</span> <span class="err">!</span> <span class="o">-</span><span class="n">r</span> <span class="s2">&quot;$file&quot;</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">echo</span> <span class="s2">&quot;ERROR: File not found or not readable: $file&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">fi</span>
+    <span class="k">return</span> <span class="mi">0</span>
+<span class="p">}</span>
 
-    if job_id=$(sbatch "$job_script" 2&gt;&amp;1); then
-        echo "Submitted: $infile -&gt; $job_id"
-        ((submitted_jobs++))
-    else
-        echo "Failed: $infile" &gt;&amp;2
-        ((failed_jobs++))
-    fi
-fi
-</code></pre>
-<p>done</p>
-<p>echo "Summary: $submitted_jobs submitted, $failed_jobs failed"
-exit 0</p>
+<span class="n">create_job_script</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">local</span> <span class="n">infile</span><span class="o">=</span><span class="err">$</span><span class="mi">1</span>
+    <span class="n">local</span> <span class="n">head</span><span class="o">=</span><span class="s2">&quot;${infile%.*}&quot;</span>
+    <span class="n">local</span> <span class="n">job_script</span><span class="o">=</span><span class="s2">&quot;$</span><span class="si">{head}</span><span class="s2">.slm&quot;</span>
+    
+    <span class="n">cat</span> <span class="o">&gt;</span> <span class="s2">&quot;$job_script&quot;</span> <span class="o">&lt;&lt;</span><span class="s1">&#39;EOF&#39;</span>
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#SBATCH --job-name=HEAD_PLACEHOLDER</span>
+<span class="c1">#SBATCH --partition=PARTITION_PLACEHOLDER</span>
+<span class="c1">#SBATCH --output=HEAD_PLACEHOLDER.%j.out</span>
+<span class="c1">#SBATCH --error=HEAD_PLACEHOLDER.%j.err</span>
+<span class="c1">#SBATCH --time=TIME_PLACEHOLDER</span>
+<span class="c1">#SBATCH --nodes=1</span>
+<span class="c1">#SBATCH --ntasks=NPROCS_PLACEHOLDER</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
 
+<span class="nb">set</span> <span class="o">-</span><span class="n">euo</span> <span class="n">pipefail</span>
+
+<span class="c1"># Load modules</span>
+<span class="n">module</span> <span class="n">purge</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">GCC</span><span class="o">/</span><span class="mf">15.1.0</span> <span class="n">openmpi</span><span class="o">/</span><span class="mf">4.1.6</span>
+<span class="n">module</span> <span class="n">load</span> <span class="n">orca</span><span class="o">/</span><span class="mf">6.1.0</span>
+
+<span class="c1"># PMIx configuration</span>
+<span class="n">export</span> <span class="n">SLURM_MPI_TYPE</span><span class="o">=</span><span class="n">pmix</span>
+<span class="n">export</span> <span class="n">OMPI_MCA_pmix_base_verbose</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">export</span> <span class="n">ORCA_MPI_RSH</span><span class="o">=</span><span class="s2">&quot;srun&quot;</span>
+
+<span class="c1"># Setup paths</span>
+<span class="n">logfile</span><span class="o">=</span><span class="s2">&quot;$(pwd)/HEAD_PLACEHOLDER.out&quot;</span>
+<span class="n">workdir</span><span class="o">=</span><span class="s2">&quot;$(pwd)&quot;</span>
+<span class="n">tempdir</span><span class="o">=</span><span class="s2">&quot;/tmp/jobs/$</span><span class="si">{SLURM_JOB_ID}</span><span class="s2">/HEAD_PLACEHOLDER.files&quot;</span>
+
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="s2">&quot;$tempdir&quot;</span> <span class="o">||</span> <span class="p">{</span> <span class="n">echo</span> <span class="s2">&quot;ERROR: Cannot create temp directory&quot;</span><span class="p">;</span> <span class="n">exit</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">cp</span> <span class="s2">&quot;$workdir/HEAD_PLACEHOLDER&quot;</span><span class="o">*</span> <span class="s2">&quot;$tempdir&quot;</span> <span class="o">||</span> <span class="p">{</span> <span class="n">echo</span> <span class="s2">&quot;ERROR: Cannot copy input files&quot;</span><span class="p">;</span> <span class="n">exit</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="n">cd</span> <span class="s2">&quot;$tempdir&quot;</span> <span class="o">||</span> <span class="p">{</span> <span class="n">echo</span> <span class="s2">&quot;ERROR: Cannot change to temp directory&quot;</span><span class="p">;</span> <span class="n">exit</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1"># Run ORCA</span>
+<span class="err">$</span><span class="p">(</span><span class="n">which</span> <span class="n">orca</span><span class="p">)</span> <span class="n">INFILE_PLACEHOLDER</span> <span class="mi">1</span><span class="o">&gt;&gt;</span><span class="s2">&quot;$logfile&quot;</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+<span class="n">orca_exit</span><span class="o">=</span><span class="err">$?</span>
+
+<span class="c1"># Cleanup and copy results</span>
+<span class="n">find</span> <span class="s2">&quot;$tempdir&quot;</span> <span class="o">-</span><span class="n">maxdepth</span> <span class="mi">1</span> <span class="o">-</span><span class="nb">type</span> <span class="n">f</span> <span class="o">-</span><span class="n">name</span> <span class="s2">&quot;*.tmp*&quot;</span> <span class="o">-</span><span class="n">delete</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">Rf</span> <span class="s2">&quot;$tempdir&quot;</span><span class="o">/*</span> <span class="s2">&quot;$workdir/&quot;</span> <span class="o">||</span> <span class="p">{</span> <span class="n">echo</span> <span class="s2">&quot;ERROR: Cannot copy results back&quot;</span><span class="p">;</span> <span class="n">exit</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">exit</span> <span class="err">$</span><span class="n">orca_exit</span>
+<span class="n">EOF</span>
+
+    <span class="c1"># Replace placeholders</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s|HEAD_PLACEHOLDER|$</span><span class="si">{head}</span><span class="s2">|g&quot;</span> <span class="s2">&quot;$job_script&quot;</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s|PARTITION_PLACEHOLDER|$</span><span class="si">{partition}</span><span class="s2">|g&quot;</span> <span class="s2">&quot;$job_script&quot;</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s|TIME_PLACEHOLDER|$</span><span class="si">{time}</span><span class="s2">|g&quot;</span> <span class="s2">&quot;$job_script&quot;</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s|NPROCS_PLACEHOLDER|$</span><span class="si">{nprocs}</span><span class="s2">|g&quot;</span> <span class="s2">&quot;$job_script&quot;</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s|INFILE_PLACEHOLDER|$</span><span class="si">{infile}</span><span class="s2">|g&quot;</span> <span class="s2">&quot;$job_script&quot;</span>
+
+    <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="s2">&quot;$job_script&quot;</span>
+    <span class="n">echo</span> <span class="s2">&quot;$job_script&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># Parse arguments</span>
+<span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="c1"># -eq 0 ]; then</span>
+    <span class="n">usage</span>
+<span class="n">fi</span>
+
+<span class="n">files</span><span class="o">=</span><span class="p">()</span>
+<span class="k">while</span> <span class="p">[[</span> <span class="err">$</span><span class="c1"># -gt 0 &amp;&amp; &quot;$1&quot; == *.inp ]]; do</span>
+    <span class="n">files</span><span class="o">+=</span><span class="p">(</span><span class="s2">&quot;$1&quot;</span><span class="p">)</span>
+    <span class="n">shift</span>
+<span class="n">done</span>
+
+<span class="k">while</span> <span class="n">getopts</span> <span class="s2">&quot;n:t:p:h&quot;</span> <span class="n">opt</span><span class="p">;</span> <span class="n">do</span>
+    <span class="k">case</span> <span class="s2">&quot;$opt&quot;</span> <span class="ow">in</span>
+        <span class="n">n</span><span class="p">)</span> <span class="n">nprocs</span><span class="o">=</span><span class="err">$</span><span class="n">OPTARG</span> <span class="p">;;</span>
+        <span class="n">t</span><span class="p">)</span> <span class="n">time</span><span class="o">=</span><span class="err">$</span><span class="n">OPTARG</span> <span class="p">;;</span>
+        <span class="n">p</span><span class="p">)</span> <span class="n">partition</span><span class="o">=</span><span class="err">$</span><span class="n">OPTARG</span> <span class="p">;;</span>
+        <span class="n">h</span><span class="p">)</span> <span class="n">usage</span> <span class="p">;;</span>
+        <span class="o">*</span><span class="p">)</span> <span class="n">usage</span> <span class="p">;;</span>
+    <span class="n">esac</span>
+<span class="n">done</span>
+
+<span class="n">validate_input</span>
+
+<span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="p">{</span><span class="c1">#files[@]} -eq 0 ]; then</span>
+    <span class="n">echo</span> <span class="s2">&quot;ERROR: No input files provided&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
+    <span class="n">usage</span>
+<span class="n">fi</span>
+
+<span class="c1"># Process files</span>
+<span class="n">submitted_jobs</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">failed_jobs</span><span class="o">=</span><span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">infile</span> <span class="ow">in</span> <span class="s2">&quot;$</span><span class="si">{files[@]}</span><span class="s2">&quot;</span><span class="p">;</span> <span class="n">do</span>
+    <span class="k">if</span> <span class="p">[[</span> <span class="s2">&quot;$infile&quot;</span> <span class="o">==</span> <span class="o">*.</span><span class="n">inp</span> <span class="p">]];</span> <span class="n">then</span>
+        <span class="k">if</span> <span class="err">!</span> <span class="n">check_file_exists</span> <span class="s2">&quot;$infile&quot;</span><span class="p">;</span> <span class="n">then</span>
+            <span class="p">((</span><span class="n">failed_jobs</span><span class="o">++</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="n">fi</span>
+        
+        <span class="n">job_script</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">create_job_script</span> <span class="s2">&quot;$infile&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">job_id</span><span class="o">=</span><span class="err">$</span><span class="p">(</span><span class="n">sbatch</span> <span class="s2">&quot;$job_script&quot;</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span><span class="p">);</span> <span class="n">then</span>
+            <span class="n">echo</span> <span class="s2">&quot;Submitted: $infile -&gt; $job_id&quot;</span>
+            <span class="p">((</span><span class="n">submitted_jobs</span><span class="o">++</span><span class="p">))</span>
+        <span class="k">else</span>
+            <span class="n">echo</span> <span class="s2">&quot;Failed: $infile&quot;</span> <span class="o">&gt;&amp;</span><span class="mi">2</span>
+            <span class="p">((</span><span class="n">failed_jobs</span><span class="o">++</span><span class="p">))</span>
+        <span class="n">fi</span>
+    <span class="n">fi</span>
+<span class="n">done</span>
+
+<span class="n">echo</span> <span class="s2">&quot;Summary: $submitted_jobs submitted, $failed_jobs failed&quot;</span>
+<span class="n">exit</span> <span class="mi">0</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
