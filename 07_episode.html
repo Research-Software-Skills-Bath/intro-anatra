@@ -13102,45 +13102,45 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>In order to start a VNC session, we load the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">TurboVNC</code> module and start a server:</p>
-<div class="highlight"><pre><span></span><span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ module load TurboVNC</span>
+<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>TurboVNC
 
-<span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ vncserver -otp</span>
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>vncserver<span class="w"> </span>-otp
 
-<span class="go">Desktop &#39;TurboVNC: anatra-01:1 (mjc62)&#39; started on display anatra-01:1</span>
+Desktop<span class="w"> </span><span class="s1">&#39;TurboVNC: anatra-01:1 (mjc62)&#39;</span><span class="w"> </span>started<span class="w"> </span>on<span class="w"> </span>display<span class="w"> </span>anatra-01:1
 
-<span class="go">One-Time Password authentication enabled.  Generating initial OTP ...</span>
-<span class="go">Full control one-time password: 32534535</span>
-<span class="go">Run &#39;/opt/TurboVNC/bin/vncpasswd -o&#39; from within the TurboVNC session or</span>
-<span class="go">    &#39;/opt/TurboVNC/bin/vncpasswd -o -display :1&#39; from within this shell</span>
-<span class="go">    to generate additional OTPs</span>
-<span class="go">Starting applications specified in /opt/TurboVNC/bin/xstartup.turbovnc</span>
-<span class="go">Log file is /home/w/mjc62/.vnc/anatra-01:1.log</span>
+One-Time<span class="w"> </span>Password<span class="w"> </span>authentication<span class="w"> </span>enabled.<span class="w">  </span>Generating<span class="w"> </span>initial<span class="w"> </span>OTP<span class="w"> </span>...
+Full<span class="w"> </span>control<span class="w"> </span>one-time<span class="w"> </span>password:<span class="w"> </span><span class="m">32534535</span>
+Run<span class="w"> </span><span class="s1">&#39;/opt/TurboVNC/bin/vncpasswd -o&#39;</span><span class="w"> </span>from<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>TurboVNC<span class="w"> </span>session<span class="w"> </span>or
+<span class="w">    </span><span class="s1">&#39;/opt/TurboVNC/bin/vncpasswd -o -display :1&#39;</span><span class="w"> </span>from<span class="w"> </span>within<span class="w"> </span>this<span class="w"> </span>shell
+<span class="w">    </span>to<span class="w"> </span>generate<span class="w"> </span>additional<span class="w"> </span>OTPs
+Starting<span class="w"> </span>applications<span class="w"> </span>specified<span class="w"> </span><span class="k">in</span><span class="w"> </span>/opt/TurboVNC/bin/xstartup.turbovnc
+Log<span class="w"> </span>file<span class="w"> </span>is<span class="w"> </span>/home/w/mjc62/.vnc/anatra-01:1.log
 </pre></div>
 <p>The <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-otp</code> flag generates a one-time-password which can be used to log in to the session.</p>
 <p>Note that only one session may be run by a user at any time. If we attempt to start another session, we will see an error:</p>
-<div class="highlight"><pre><span></span><span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ vncserver</span>
-<span class="go">You are already running a VNC session for mjc62 user. Maximum session is limited to 1 per user!</span>
-<span class="go">Run &#39;vncserver -list&#39; to list the current session</span>
+<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>vncserver
+You<span class="w"> </span>are<span class="w"> </span>already<span class="w"> </span>running<span class="w"> </span>a<span class="w"> </span>VNC<span class="w"> </span>session<span class="w"> </span><span class="k">for</span><span class="w"> </span>mjc62<span class="w"> </span>user.<span class="w"> </span>Maximum<span class="w"> </span>session<span class="w"> </span>is<span class="w"> </span>limited<span class="w"> </span>to<span class="w"> </span><span class="m">1</span><span class="w"> </span>per<span class="w"> </span>user!
+Run<span class="w"> </span><span class="s1">&#39;vncserver -list&#39;</span><span class="w"> </span>to<span class="w"> </span>list<span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>session
 
 
-<span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ vncserver -list</span>
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>vncserver<span class="w"> </span>-list
 
-<span class="go">TurboVNC sessions:</span>
+TurboVNC<span class="w"> </span>sessions:
 
-<span class="go">X DISPLAY # PROCESS ID  NOVNC PROCESS ID</span>
-<span class="go">:1      14305</span>
+X<span class="w"> </span>DISPLAY<span class="w"> </span><span class="c1"># PROCESS ID  NOVNC PROCESS ID</span>
+:1<span class="w">      </span><span class="m">14305</span>
 </pre></div>
 <p>This session will persist after closing the terminal, but will autokill itself after 6 hours. In order to end a session early, the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-kill</code> flag can be used with the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">vncserver</code> command:</p>
-<div class="highlight"><pre><span></span><span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ module load TurboVNC</span>
+<div class="highlight"><pre><span></span>mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>module<span class="w"> </span>load<span class="w"> </span>TurboVNC
 
-<span class="go">mjc62 in anatra-01 in ~</span>
-<span class="go">❯ vncserver -kill :1</span>
-<span class="go">Killing Xvnc process ID 15717</span>
+mjc62<span class="w"> </span><span class="k">in</span><span class="w"> </span>anatra-01<span class="w"> </span><span class="k">in</span><span class="w"> </span>~
+❯<span class="w"> </span>vncserver<span class="w"> </span>-kill<span class="w"> </span>:1
+Killing<span class="w"> </span>Xvnc<span class="w"> </span>process<span class="w"> </span>ID<span class="w"> </span><span class="m">15717</span>
 </pre></div>
 
 </div>
@@ -13155,7 +13155,7 @@ div#notebook {
 <p><img src="./images/vnc-url.png" alt="anatra-vnc-url"></p>
 <p><img src="./images/vnc-password.png" alt="anatra-vnc-pass"></p>
 <p>You will then be presented with a desktop environment.</p>
-<p><img src="./images/vnc-login.png" alt="anatra-vnc-desktop"></p>
+<p><img src="./images/vnc-login-xfce.png" alt="anatra-vnc-desktop"></p>
 
 </div>
 </div>
@@ -13163,10 +13163,15 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Starting-a-Gaussview-session">Starting a Gaussview session<a class="anchor-link" href="#Starting-a-Gaussview-session">&#182;</a></h2><p>From the desktop view, Gaussview can be started by opening a terminal and running the commands shown below:</p>
-<p><img src="./images/vnc-terminal.png" alt="anatra-vnc-term"></p>
-<p><img src="./images/vnc-terminal-gview.png" alt="anatra-vnc-term-gv"></p>
-<p><img src="./images/vnc-gview.png" alt="anatra-vnc-term-gv"></p>
+<h2 id="Starting-a-GaussView-session">Starting a GaussView session<a class="anchor-link" href="#Starting-a-GaussView-session">&#182;</a></h2><p>From the desktop view, <strong>GaussView</strong> can be started by opening a terminal and running the commands shown below:</p>
+<div class="highlight"><pre><span></span><span class="c1"># Load GaussView module</span>
+module<span class="w"> </span>load<span class="w"> </span>gaussview
+
+
+<span class="c1"># Open GaussView application</span>
+gview
+</pre></div>
+<p><img src="./images/vnc-xfce-gview.png" alt="anatra-vnc-term-gv"></p>
 
 </div>
 </div>
