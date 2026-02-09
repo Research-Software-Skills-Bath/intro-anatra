@@ -13123,18 +13123,16 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/09/A.02
 <span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_MEM_PER_CPU</span><span class="o">*</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="k">))</span>MB
 
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_SCRDIR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_PDEF</span>
-<span class="nb">echo</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">$GAUSS_MDEF</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_SCRDIR</span><span class="o">=</span>/tmp/<span class="nv">$USER</span>/<span class="nv">$SLURM_JOBID</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
+chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 
 <span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
 
-mkdir<span class="w"> </span>-p<span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>
-cp<span class="w"> </span><span class="nv">$infile</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
-<span class="nb">cd</span><span class="w"> </span>jobs/<span class="nv">$SLURM_JOBID</span>/
 
 g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$infile</span><span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span>output.log
+<span class="c1">#Clean Up</span>
+rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 </pre></div>
 <h2 id="Gaussian-16">Gaussian 16<a class="anchor-link" href="#Gaussian-16">&#182;</a></h2><p>Below is an example script for an Ansys run, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
