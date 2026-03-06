@@ -13161,6 +13161,9 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/16/C.01
 
 <span class="nb">source</span><span class="w"> </span><span class="nv">$g16profile</span>
 
+<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_PDEF</span><span class="o">=</span><span class="si">${</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="si">}</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">GAUSS_MDEF</span><span class="o">=</span><span class="k">$((</span><span class="nv">SLURM_MEM_PER_CPU</span><span class="o">*</span><span class="nv">SLURM_CPUS_PER_TASK</span><span class="k">))</span>MB
+
 <span class="nb">echo</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
