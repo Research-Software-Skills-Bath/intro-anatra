@@ -13140,10 +13140,8 @@ module<span class="w"> </span>load<span class="w"> </span>cuda/13.0.1
 nvcc<span class="w"> </span>-o<span class="w"> </span>job_exec<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span>-arch<span class="o">=</span>sm_90
 
 <span class="c1"># For Chemistry Users </span>
-<span class="c1">#(Ada Lovelace L40S - sm_89):</span>
-<span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_89</span>
-<span class="c1">#(Ampere A40 - sm_86):</span>
-<span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_86</span>
+<span class="c1">#(Ada Lovelace L40S - sm_89): nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_89</span>
+<span class="c1">#(Ampere A40 - sm_86): nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_86</span>
 
 <span class="c1"># Run the compiled program</span>
 ./job_exec
