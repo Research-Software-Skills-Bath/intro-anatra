@@ -13098,7 +13098,7 @@ div#notebook {
 <h2 id="GPU-Partitions-on-Anatra">GPU Partitions on Anatra<a class="anchor-link" href="#GPU-Partitions-on-Anatra">&#182;</a></h2><p>Anatra provides two GPU partitions depending on your research area:</p>
 <ul>
 <li><strong>lifescigpu</strong> - For Life Sciences users - Uses <strong>Nvidia Hopper (H100, sm_90)</strong> architecture</li>
-<li><strong>chempgpu</strong> - For Chemistry users - Uses <strong>Nvidia Ada Lovelace (L40S, sm_89)</strong> architecture</li>
+<li><strong>chempgpu</strong> - For Chemistry users - Uses <strong>Nvidia Ada Lovelace (L40S, sm_89)</strong> and <strong>Nvidia Ampere (A40, sm_86)</strong> architectures</li>
 </ul>
 <h2 id="Why-GPU-Architecture-Matters">Why GPU Architecture Matters<a class="anchor-link" href="#Why-GPU-Architecture-Matters">&#182;</a></h2><p>Different GPU models have different compute capabilities (architectures). Specifying the correct architecture ensures your code:</p>
 <ul>
@@ -13135,11 +13135,15 @@ module<span class="w"> </span>load<span class="w"> </span>cuda/13.0.1
 <span class="k">fi</span>
 
 <span class="c1"># Compile for the appropriate GPU architecture</span>
-<span class="c1"># For Life Science Users (Hopper H100 - sm_90):</span>
+<span class="c1"># For Life Science Users </span>
+<span class="c1">#(Hopper H100 - sm_90):</span>
 nvcc<span class="w"> </span>-o<span class="w"> </span>job_exec<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span><span class="w"> </span>-arch<span class="o">=</span>sm_90
 
-<span class="c1"># For Chemistry Users (Ada Lovelace L40S - sm_89):</span>
+<span class="c1"># For Chemistry Users </span>
+<span class="c1">#(Ada Lovelace L40S - sm_89):</span>
 <span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_89</span>
+<span class="c1">#(Ampere A40 - sm_86):</span>
+<span class="c1"># nvcc -o job_exec &quot;$INPUT_FILE&quot; -arch=sm_86</span>
 
 <span class="c1"># Run the compiled program</span>
 ./job_exec
