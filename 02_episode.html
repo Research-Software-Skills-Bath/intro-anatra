@@ -13092,17 +13092,62 @@ div#notebook {
   <h1 style="margin: 0; color: #111;">University of Bath</h1>
   <h2 style="margin: 5px 0 0 0; color: #111;">Research Computing Team (DDaT)</h2>
   <h3 style="margin: 5px 0 0 0; color: #222;">Anatra HPC Documentation</h3>
-</div><div style="margin: 10px 0 25px 0; padding: 10px 0; border-bottom: 1px solid #ccc;">
-  <a href="00_schedule.html" style="margin-right: 18px;">Schedule</a>
-  <a href="00_setup.html" style="margin-right: 18px;">Setup</a>
-  <a href="01_episode.html" style="margin-right: 18px;">Accessing Anatra</a>
-  <a href="02_episode.html" style="margin-right: 18px;">Slurm</a>
-  <a href="03_episode.html" style="margin-right: 18px;">Hardware</a>
-  <a href="04_episode.html" style="margin-right: 18px;">Storage</a>
-  <a href="05_episode.html" style="margin-right: 18px;">Software</a>
-  <a href="08_episode.html" style="margin-right: 18px;">GPU Jobs</a>
-  <a href="10_episode.html">ORCA Jobs</a>
-</div>
+</div><div id="top-nav" style="
+  margin: 10px 0 25px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+">
+
+  <a href="00_schedule.html" class="top-nav-link">Schedule</a>
+  <a href="00_setup.html" class="top-nav-link">Setup</a>
+  <a href="01_episode.html" class="top-nav-link">Accessing Anatra</a>
+  <a href="02_episode.html" class="top-nav-link">Slurm</a>
+  <a href="03_episode.html" class="top-nav-link">Hardware</a>
+  <a href="04_episode.html" class="top-nav-link">Storage</a>
+  <a href="05_episode.html" class="top-nav-link">Software</a>
+  <a href="06_episode.html" class="top-nav-link">Running Gaussian Jobs</a>
+  <a href="07_episode.html" class="top-nav-link">Starting a VNC Session</a>
+  <a href="08_episode.html" class="top-nav-link">Running GPU Jobs</a>
+  <a href="09_episode.html" class="top-nav-link">Apptainer Containers</a>
+  <a href="10_episode.html" class="top-nav-link">Running ORCA Jobs</a>
+
+</div><style>
+  .top-nav-link {
+    display: inline-block;
+    padding: 8px 14px;
+    background: #e6eaed;
+    color: #111 !important;
+    text-decoration: none !important;
+    border: 1px solid #b8c2c8;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .top-nav-link:hover {
+    background: #d6dde2;
+  }
+
+  .top-nav-link.active {
+    background: #4f6470;
+    color: #fff !important;
+    border-color: #4f6470;
+  }
+</style><script>
+(function () {
+  var current = window.location.pathname.split("/").pop();
+  var links = document.querySelectorAll("#top-nav a.top-nav-link");
+
+  links.forEach(function(link) {
+    var href = link.getAttribute("href");
+    if (href === current) {
+      link.classList.add("active");
+    }
+  });
+})();
+</script>
 </div>
 </div>
 </div>
