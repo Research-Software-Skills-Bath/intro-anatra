@@ -13100,12 +13100,6 @@ div#notebook {
 <li><strong>lifescigpu</strong> - For Life Sciences users - Uses <strong>Nvidia Hopper (H100, sm_90)</strong> architecture</li>
 <li><strong>chempgpu</strong> - For Chemistry users - Uses <strong>Nvidia Ada Lovelace (L40S, sm_89)</strong> and <strong>Nvidia Ampere (A40, sm_86)</strong> architectures</li>
 </ul>
-<h2 id="Why-GPU-Architecture-Matters">Why GPU Architecture Matters<a class="anchor-link" href="#Why-GPU-Architecture-Matters">&#182;</a></h2><p>Different GPU models have different compute capabilities (architectures). Specifying the correct architecture ensures your code:</p>
-<ul>
-<li>Compiles with the right optimizations for your GPU</li>
-<li>Runs efficiently without compatibility issues</li>
-<li>Avoids runtime errors from architecture mismatches</li>
-</ul>
 <h2 id="Example-GPU-Job-Script">Example GPU Job Script<a class="anchor-link" href="#Example-GPU-Job-Script">&#182;</a></h2><p>Below is an example batch script for a GPU job, Anatra users can able to submit their batch job scripts from their respective working project directories i.e., Chemistry users it would be <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]</code> storage area and for Lifesciences users that would be <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/lifesciences/[project-code]</code> storage area.</p>
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#SBATCH --job-name=cuda-gpu-job</span>
@@ -13166,7 +13160,6 @@ nvcc<span class="w"> </span>-o<span class="w"> </span>job_exec<span class="w"> <
 <p><strong>sbatch gpu_job.slm input_file.cu</strong></p>
 <h2 id="Key-Points-to-Remember">Key Points to Remember<a class="anchor-link" href="#Key-Points-to-Remember">&#182;</a></h2><ol>
 <li><strong>Always specify the correct partition</strong> for your research area</li>
-<li><strong>Match the architecture</strong> (<code style="background-color:#F7F7F7;border:1px solid #CFCFCF">-arch=sm_XX</code>) to your GPU partition</li>
 <li><strong>Request appropriate GPU resources</strong> with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--gres=gpu:N</code></li>
 <li><strong>Load the CUDA module</strong> before compiling or running GPU code</li>
 <li><strong>Set reasonable time limits</strong> to avoid unnecessary queuing</li>
