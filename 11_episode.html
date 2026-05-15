@@ -13185,11 +13185,14 @@ python<span class="w"> </span>my_script.py
 
 <pre><code style="">sbatch example.slm</code></pre>
 <h1 id="Temporary-Job-Storage">Temporary Job Storage<a class="anchor-link" href="#Temporary-Job-Storage">&#182;</a></h1><p>As part of the SLURM job setup process, a temporary working directory is automatically created on the compute node at:</p>
-
-<pre><code style="">text/tmp/&lt;user_id&gt;/&lt;job_id&gt;
-```where:
-- `&lt;user_id&gt;` is your username
-- `&lt;job_id&gt;` is the SLURM job ID</code></pre>
+<div class="highlight"><pre><span></span>/tmp/&lt;user_id&gt;/&lt;job_id&gt;
+</pre></div>
+<p>where:</p>
+<ul>
+<li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">&lt;user_id&gt;</code> is your username</li>
+<li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">&lt;job_id&gt;</code> is the SLURM job ID
+```</li>
+</ul>
 
 </div>
 </div>
