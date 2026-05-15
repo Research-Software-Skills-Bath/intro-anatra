@@ -13168,10 +13168,23 @@ div#notebook {
 <span class="c1">#SBATCH --ntasks=1</span>
 <span class="c1">#SBATCH --cpus-per-task=12</span>
 
+<span class="c1"># Clean module environment &amp; and load anaconda</span>
 module<span class="w"> </span>purge
 module<span class="w"> </span>load<span class="w"> </span>anaconda/2025.06
+<span class="c1"># Enable conda commands</span>
 <span class="nb">source</span><span class="w"> </span><span class="s1">&#39;$(conda info --base)/etc/profile.d/conda.sh&#39;</span>
 conda<span class="w"> </span>activate<span class="w"> </span><span class="o">[</span>my_env<span class="o">]</span>
+
+<span class="c1"># Change to the directory where the job was submitted</span>
+<span class="nb">cd</span><span class="w"> </span><span class="s1">&#39;$SLURM_SUBMIT_DIR&#39;</span>
+
+<span class="c1"># Run your Python application</span>
+python<span class="w"> </span>my_script.py
+
+<span class="sb">```</span>Save<span class="w"> </span>the<span class="w"> </span>script<span class="w"> </span>as<span class="w"> </span><span class="sb">`</span>example.slm<span class="sb">`</span><span class="w"> </span>and<span class="w"> </span>submit<span class="w"> </span>it<span class="w"> </span>using:
+<span class="sb">```</span>console
+sbatch<span class="w"> </span>example.slm
+<span class="sb">```</span>
 </pre></div>
 <p>Assuming these files are saved as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">example.slm</code> then they can be submitted with the command:</p>
 <div class="highlight"><pre><span></span><span class="go">sbatch example.slm</span>
