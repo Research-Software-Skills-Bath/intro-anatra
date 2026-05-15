@@ -13186,9 +13186,12 @@ python<span class="w"> </span>my_script.py
 </pre></div>
 
 <pre><code style="">
-Assuming these files are saved as `example.slm` then they can be submitted with the command:
-```console
-sbatch example.slm</code></pre>
+# Temporary Job Storage
+
+As part of the SLURM job setup process, a temporary working directory is automatically created on the compute node at:
+
+```text/tmp/&lt;user_id&gt;/&lt;job_id&gt;
+```</code></pre>
 
 </div>
 </div>
