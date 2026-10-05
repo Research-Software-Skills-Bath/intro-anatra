@@ -13173,11 +13173,11 @@ div#notebook {
 module<span class="w"> </span>purge
 module<span class="w"> </span>load<span class="w"> </span>anaconda/2025.06
 <span class="c1"># Enable conda commands</span>
-<span class="nb">source</span><span class="w"> </span><span class="s1">&#39;$(conda info --base)/etc/profile.d/conda.sh&#39;</span>
+<span class="nb">source</span><span class="w"> </span><span class="s1">'$(conda info --base)/etc/profile.d/conda.sh'</span>
 conda<span class="w"> </span>activate<span class="w"> </span><span class="o">[</span>my_env<span class="o">]</span>
 
 <span class="c1"># Change to the directory where the job was submitted</span>
-<span class="nb">cd</span><span class="w"> </span><span class="s1">&#39;$SLURM_SUBMIT_DIR&#39;</span>
+<span class="nb">cd</span><span class="w"> </span><span class="s1">'$SLURM_SUBMIT_DIR'</span>
 
 <span class="c1"># Run your Python application</span>
 python<span class="w"> </span>my_script.py

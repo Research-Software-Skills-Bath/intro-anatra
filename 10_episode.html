@@ -13181,8 +13181,8 @@ This submission script automates the process of running ORCA 6.1.0 using <strong
 <span class="c1"># Defaults</span>
 
 <span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_NPROCS</span><span class="o">=</span><span class="m">12</span>
-<span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_TIME</span><span class="o">=</span><span class="s2">&quot;3-00:00:00&quot;</span>
-<span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_PARTITION</span><span class="o">=</span><span class="s2">&quot;chemistry&quot;</span>
+<span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_TIME</span><span class="o">=</span><span class="s2">"3-00:00:00"</span>
+<span class="nb">readonly</span><span class="w"> </span><span class="nv">DEFAULT_PARTITION</span><span class="o">=</span><span class="s2">"chemistry"</span>
 <span class="nb">readonly</span><span class="w"> </span><span class="nv">MAX_PROCS</span><span class="o">=</span><span class="m">96</span>
 
 <span class="nv">nprocs</span><span class="o">=</span><span class="si">${</span><span class="nv">DEFAULT_NPROCS</span><span class="si">}</span>
@@ -13207,17 +13207,17 @@ usage<span class="o">()</span><span class="w"> </span>
 
 validate_input<span class="o">()</span><span class="w"> </span>
 <span class="o">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nprocs</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+$<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nprocs</span><span class="s2">&quot;</span><span class="w"> </span>-le<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: Number of cores must be a positive integer&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$nprocs</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+$<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$nprocs</span><span class="s2">"</span><span class="w"> </span>-le<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: Number of cores must be a positive integer"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$nprocs</span><span class="s2">&quot;</span><span class="w"> </span>-gt<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MAX_PROCS</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$nprocs</span><span class="s2">"</span><span class="w"> </span>-gt<span class="w"> </span><span class="s2">"</span><span class="nv">$MAX_PROCS</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">        </span><span class="nv">nprocs</span><span class="o">=</span><span class="nv">$MAX_PROCS</span>
 <span class="w">    </span><span class="k">fi</span>
 
-<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$time</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+-<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>:<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>:<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>$<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: Invalid time format. Use dd-hh:mm:ss&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$time</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span><span class="m">0</span>-9<span class="o">]</span>+-<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>:<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>:<span class="o">[</span><span class="m">0</span>-9<span class="o">]{</span><span class="m">2</span><span class="o">}</span>$<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: Invalid time format. Use dd-hh:mm:ss"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
 <span class="o">}</span>
@@ -13225,8 +13225,8 @@ validate_input<span class="o">()</span><span class="w"> </span>
 check_file_exists<span class="o">()</span>
 <span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">file</span><span class="o">=</span><span class="nv">$1</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: File not found or not readable: </span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-r<span class="w"> </span><span class="s2">"</span><span class="nv">$file</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: File not found or not readable: </span><span class="nv">$file</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="m">1</span>
 <span class="w">    </span><span class="k">fi</span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="m">0</span>
@@ -13235,10 +13235,10 @@ check_file_exists<span class="o">()</span>
 create_job_script<span class="o">()</span>
 <span class="o">{</span>
 <span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">infile</span><span class="o">=</span><span class="nv">$1</span>
-<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">head</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">infile</span><span class="p">%.*</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">job_script</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">.slm&quot;</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">head</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">infile</span><span class="p">%.*</span><span class="si">}</span><span class="s2">"</span>
+<span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">job_script</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">.slm"</span>
 
-<span class="w">    </span>cat<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span><span class="w"> </span><span class="s">&lt;&lt;&#39;EOF&#39;</span>
+<span class="w">    </span>cat<span class="w"> </span>&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span><span class="w"> </span><span class="s">&lt;&lt;'EOF'</span>
 
 <span class="s">#!/bin/bash</span>
 <span class="s">#SBATCH --job-name=HEAD_PLACEHOLDER</span>
@@ -13262,41 +13262,41 @@ create_job_script<span class="o">()</span>
 
 <span class="s">export SLURM_MPI_TYPE=pmix</span>
 <span class="s">export OMPI_MCA_pmix_base_verbose=0</span>
-<span class="s">export ORCA_MPI_RSH=&quot;srun&quot;</span>
+<span class="s">export ORCA_MPI_RSH="srun"</span>
 
 <span class="s"># Setup paths</span>
 
-<span class="s">logfile=&quot;$(pwd)/HEAD_PLACEHOLDER.out&quot;</span>
-<span class="s">workdir=&quot;$(pwd)&quot;</span>
-<span class="s">tempdir=&quot;/tmp/jobs/${SLURM_JOB_ID}/HEAD_PLACEHOLDER.files&quot;</span>
+<span class="s">logfile="$(pwd)/HEAD_PLACEHOLDER.out"</span>
+<span class="s">workdir="$(pwd)"</span>
+<span class="s">tempdir="/tmp/jobs/${SLURM_JOB_ID}/HEAD_PLACEHOLDER.files"</span>
 
-<span class="s">mkdir -p &quot;$tempdir&quot; || { echo &quot;ERROR: Cannot create temp directory&quot;; exit 1; }</span>
-<span class="s">cp &quot;$workdir/HEAD_PLACEHOLDER&quot;* &quot;$tempdir&quot; || { echo &quot;ERROR: Cannot copy input files&quot;; exit 1; }</span>
-<span class="s">cd &quot;$tempdir&quot; || { echo &quot;ERROR: Cannot change to temp directory&quot;; exit 1; }</span>
+<span class="s">mkdir -p "$tempdir" || { echo "ERROR: Cannot create temp directory"; exit 1; }</span>
+<span class="s">cp "$workdir/HEAD_PLACEHOLDER"* "$tempdir" || { echo "ERROR: Cannot copy input files"; exit 1; }</span>
+<span class="s">cd "$tempdir" || { echo "ERROR: Cannot change to temp directory"; exit 1; }</span>
 
 <span class="s"># Run ORCA</span>
 
-<span class="s">$(which orca) INFILE_PLACEHOLDER 1&gt;&gt;&quot;$logfile&quot; 2&gt;&amp;1</span>
+<span class="s">$(which orca) INFILE_PLACEHOLDER 1&gt;&gt;"$logfile" 2&gt;&amp;1</span>
 <span class="s">orca_exit=$?</span>
 
 <span class="s"># Cleanup and copy results</span>
 
-<span class="s">find &quot;$tempdir&quot; -maxdepth 1 -type f -name &quot;*.tmp*&quot; -delete</span>
-<span class="s">cp -Rf &quot;$tempdir&quot;/* &quot;$workdir/&quot; || { echo &quot;ERROR: Cannot copy results back&quot;; exit 1; }</span>
+<span class="s">find "$tempdir" -maxdepth 1 -type f -name "*.tmp*" -delete</span>
+<span class="s">cp -Rf "$tempdir"/* "$workdir/" || { echo "ERROR: Cannot copy results back"; exit 1; }</span>
 
 <span class="s">exit $orca_exit</span>
 <span class="s">EOF</span>
 
 <span class="w">    </span><span class="c1"># Replace placeholders</span>
 
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|HEAD_PLACEHOLDER|</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|PARTITION_PLACEHOLDER|</span><span class="si">${</span><span class="nv">partition</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|TIME_PLACEHOLDER|</span><span class="si">${</span><span class="nv">time</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|NPROCS_PLACEHOLDER|</span><span class="si">${</span><span class="nv">nprocs</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
-<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;s|INFILE_PLACEHOLDER|</span><span class="si">${</span><span class="nv">infile</span><span class="si">}</span><span class="s2">|g&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s|HEAD_PLACEHOLDER|</span><span class="si">${</span><span class="nv">head</span><span class="si">}</span><span class="s2">|g"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s|PARTITION_PLACEHOLDER|</span><span class="si">${</span><span class="nv">partition</span><span class="si">}</span><span class="s2">|g"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s|TIME_PLACEHOLDER|</span><span class="si">${</span><span class="nv">time</span><span class="si">}</span><span class="s2">|g"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s|NPROCS_PLACEHOLDER|</span><span class="si">${</span><span class="nv">nprocs</span><span class="si">}</span><span class="s2">|g"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
+<span class="w">    </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">"s|INFILE_PLACEHOLDER|</span><span class="si">${</span><span class="nv">infile</span><span class="si">}</span><span class="s2">|g"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
 
-<span class="w">    </span>chmod<span class="w"> </span>+x<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span>
+<span class="w">    </span>chmod<span class="w"> </span>+x<span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span>
 <span class="o">}</span>
 
 <span class="c1"># Parse arguments</span>
@@ -13306,13 +13306,13 @@ create_job_script<span class="o">()</span>
 <span class="k">fi</span>
 
 <span class="nv">files</span><span class="o">=()</span>
-<span class="k">while</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*.inp<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="nv">files</span><span class="o">+=(</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="o">)</span>
+<span class="k">while</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$#</span><span class="w"> </span>-gt<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*.inp<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="nv">files</span><span class="o">+=(</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span><span class="o">)</span>
 <span class="w">    </span><span class="nb">shift</span>
 <span class="k">done</span>
 
-<span class="k">while</span><span class="w"> </span><span class="nb">getopts</span><span class="w"> </span><span class="s2">&quot;n:t:p:h&quot;</span><span class="w"> </span>opt<span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$opt</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+<span class="k">while</span><span class="w"> </span><span class="nb">getopts</span><span class="w"> </span><span class="s2">"n:t:p:h"</span><span class="w"> </span>opt<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="s2">"</span><span class="nv">$opt</span><span class="s2">"</span><span class="w"> </span><span class="k">in</span>
 <span class="w">        </span>n<span class="o">)</span><span class="w"> </span><span class="nv">nprocs</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="w"> </span><span class="p">;;</span>
 <span class="w">        </span>t<span class="o">)</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="w"> </span><span class="p">;;</span>
 <span class="w">        </span>p<span class="o">)</span><span class="w"> </span><span class="nv">partition</span><span class="o">=</span><span class="nv">$OPTARG</span><span class="w"> </span><span class="p">;;</span>
@@ -13324,7 +13324,7 @@ create_job_script<span class="o">()</span>
 validate_input
 
 <span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="si">${#</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;ERROR: No input files provided&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"ERROR: No input files provided"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">    </span>usage
 <span class="k">fi</span>
 
@@ -13333,26 +13333,26 @@ validate_input
 <span class="nv">submitted_jobs</span><span class="o">=</span><span class="m">0</span>
 <span class="nv">failed_jobs</span><span class="o">=</span><span class="m">0</span>
 
-<span class="k">for</span><span class="w"> </span>infile<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$infile</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*.inp<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">        </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>check_file_exists<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$infile</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="k">for</span><span class="w"> </span>infile<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$infile</span><span class="s2">"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*.inp<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span>!<span class="w"> </span>check_file_exists<span class="w"> </span><span class="s2">"</span><span class="nv">$infile</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
 <span class="w">            </span><span class="o">((</span>failed_jobs++<span class="o">))</span>
 <span class="w">            </span><span class="k">continue</span>
 <span class="w">        </span><span class="k">fi</span>
 
-<span class="w">        </span><span class="nv">job_script</span><span class="o">=</span><span class="k">$(</span>create_job_script<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$infile</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="w">        </span><span class="nv">job_script</span><span class="o">=</span><span class="k">$(</span>create_job_script<span class="w"> </span><span class="s2">"</span><span class="nv">$infile</span><span class="s2">"</span><span class="k">)</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nv">job_id</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job_script</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Submitted: </span><span class="nv">$infile</span><span class="s2"> -&gt; </span><span class="nv">$job_id</span><span class="s2">&quot;</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nv">job_id</span><span class="o">=</span><span class="k">$(</span>sbatch<span class="w"> </span><span class="s2">"</span><span class="nv">$job_script</span><span class="s2">"</span><span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Submitted: </span><span class="nv">$infile</span><span class="s2"> -&gt; </span><span class="nv">$job_id</span><span class="s2">"</span>
 <span class="w">            </span><span class="o">((</span>submitted_jobs++<span class="o">))</span>
 <span class="w">        </span><span class="k">else</span>
-<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Failed: </span><span class="nv">$infile</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">            </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Failed: </span><span class="nv">$infile</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
 <span class="w">            </span><span class="o">((</span>failed_jobs++<span class="o">))</span>
 <span class="w">        </span><span class="k">fi</span>
 <span class="w">    </span><span class="k">fi</span>
 <span class="k">done</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Summary: </span><span class="nv">$submitted_jobs</span><span class="s2"> submitted, </span><span class="nv">$failed_jobs</span><span class="s2"> failed&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Summary: </span><span class="nv">$submitted_jobs</span><span class="s2"> submitted, </span><span class="nv">$failed_jobs</span><span class="s2"> failed"</span>
 <span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 </pre></div>
 

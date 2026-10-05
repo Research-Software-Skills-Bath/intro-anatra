@@ -13189,7 +13189,7 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/09/A.02
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 
-<span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
+<span class="nv">infile</span><span class="o">=</span><span class="s2">"inputs/example.gjf"</span>
 
 
 g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$infile</span><span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span>output.log
@@ -13197,7 +13197,7 @@ g09<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>
 <span class="c1">#Clean Up</span>
 rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 </pre></div>
-<h2 id="Gaussian-16">Gaussian 16<a class="anchor-link" href="#Gaussian-16">&#182;</a></h2><p>Below is an example script for an Ansys run, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
+<h2 id="Gaussian-16">Gaussian 16<a class="anchor-link" href="#Gaussian-16">&#182;</a></h2><p>Below is an example script for a g16 run, which should be submitted from the <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">/scratch/projects/[project-code]/</code> storage area.</p>
 <div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 
 <span class="c1">#SBATCH --job-name=g16-test</span>
@@ -13231,7 +13231,7 @@ module<span class="w"> </span>load<span class="w"> </span>gaussian/16/C.01
 mkdir<span class="w"> </span>-p<span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="nv">$GAUSS_SCRDIR</span>
 
-<span class="nv">infile</span><span class="o">=</span><span class="s2">&quot;inputs/example.gjf&quot;</span>
+<span class="nv">infile</span><span class="o">=</span><span class="s2">"inputs/example.gjf"</span>
 
 
 g16<span class="w"> </span>&lt;<span class="w"> </span><span class="k">$(</span>basename<span class="w"> </span><span class="nv">$infile</span><span class="k">)</span><span class="w"> </span>&gt;<span class="w"> </span>output.log
@@ -13258,6 +13258,39 @@ rm<span class="w"> </span>-rf<span class="w"> </span><span class="nv">$GAUSS_SCR
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Best-practice:-use-no-more-than-48-cores-per-Gaussian-job">Best practice: use no more than 48 cores per Gaussian job<a class="anchor-link" href="#Best-practice:-use-no-more-than-48-cores-per-Gaussian-job">&#182;</a></h2><p>The <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">chemistry</code> partition nodes have <strong>48 physical cores</strong>, shown to Slurm as <strong>96 CPUs</strong>. A single Gaussian job runs fastest when its thread count matches the physical cores. Running more threads than that makes the job slower, not faster.</p>
+<ul>
+<li>Set <strong><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">%NProcShared</code> to 48 or less</strong> in your <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">.gjf</code> input file, and request a matching <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--cpus-per-task</code> in your Slurm script.</li>
+<li><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">%NProcShared</code> in the input file overrides <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">GAUSS_PDEF</code> in the example scripts, so the value in your input file is the one Gaussian uses.</li>
+</ul>
+<h3 id="Benchmark-results">Benchmark results<a class="anchor-link" href="#Benchmark-results">&#182;</a></h3><p>Wall times for two production inputs, each run as a single job on a <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">chemistry</code> node:</p>
+<table>
+<thead><tr>
+<th><code style="background-color:#F7F7F7;border:1px solid #CFCFCF">%NProcShared</code></th>
+<th>Input 1</th>
+<th>Input 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24</td>
+<td>12:03:41</td>
+<td>25:08:49</td>
+</tr>
+<tr>
+<td><strong>48</strong></td>
+<td><strong>08:22:31</strong></td>
+<td><strong>18:39:06</strong></td>
+</tr>
+<tr>
+<td>96</td>
+<td>09:06:39 (8% slower than 48)</td>
+<td>22:48:47 (22% slower than 48)</td>
+</tr>
+</tbody>
+</table>
+<p>Going from 24 to 48 cut the runtime by about 30%. Going from 48 to 96 made both jobs slower, and how much slower depends on the calculation.</p>
+<p><strong>In summary:</strong> use <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">%NProcShared=48</code> or less for a single Gaussian job.</p>
 
 </div>
 </div>

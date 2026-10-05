@@ -13159,7 +13159,7 @@ div#notebook {
 <h2 id="Getting-Started-with-Apptainer">Getting Started with Apptainer<a class="anchor-link" href="#Getting-Started-with-Apptainer">&#182;</a></h2><h3 id="Loading-the-Module">Loading the Module<a class="anchor-link" href="#Loading-the-Module">&#182;</a></h3><p>Before using Apptainer, load the module:</p>
 <div class="highlight"><pre><span></span>module<span class="w"> </span>load<span class="w"> </span>apptainer/1.4.1
 
-<span class="c1"># Verify it&#39;s loaded</span>
+<span class="c1"># Verify it's loaded</span>
 apptainer<span class="w"> </span>--version
 </pre></div>
 <h3 id="Building-Your-First-Container">Building Your First Container<a class="anchor-link" href="#Building-Your-First-Container">&#182;</a></h3><p>Since building containers requires elevated privileges, you have two options on Anatra:</p>
@@ -13194,8 +13194,8 @@ From:<span class="w"> </span>condaforge/mambaforge:latest
 <span class="w">    </span>Description<span class="w"> </span>Bioinformatics<span class="w"> </span>tools<span class="w"> </span>via<span class="w"> </span>Conda
 
 %runscript
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Bioinformatics container ready&quot;</span>
-<span class="w">    </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Bioinformatics container ready"</span>
+<span class="w">    </span><span class="nb">exec</span><span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
 </pre></div>
 <p>Build the container remotely:</p>
 <div class="highlight"><pre><span></span>apptainer<span class="w"> </span>build<span class="w"> </span>biotools.sif<span class="w"> </span>biotools.def
@@ -13228,19 +13228,19 @@ module<span class="w"> </span>purge
 module<span class="w"> </span>load<span class="w"> </span>apptainer/1.4.1
 
 <span class="c1"># Set paths</span>
-<span class="nv">CONTAINER</span><span class="o">=</span><span class="s2">&quot;/lifesciences/containers/&lt;sif file&gt;&quot;</span>
-<span class="nv">INPUT_DIR</span><span class="o">=</span><span class="s2">&quot;/lifesciences/your-project/data&quot;</span>
-<span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">&quot;/lifesciences/your-project/results&quot;</span>
+<span class="nv">CONTAINER</span><span class="o">=</span><span class="s2">"/lifesciences/containers/&lt;sif file&gt;"</span>
+<span class="nv">INPUT_DIR</span><span class="o">=</span><span class="s2">"/lifesciences/your-project/data"</span>
+<span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">"/lifesciences/your-project/results"</span>
 <span class="nv">INPUT_FILE</span><span class="o">=</span><span class="nv">$1</span>
 
-<span class="c1"># Create output directory if it doesn&#39;t exist</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
+<span class="c1"># Create output directory if it doesn't exist</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">"</span><span class="nv">$OUTPUT_DIR</span><span class="s2">"</span>
 
 <span class="c1"># Run Application</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Running on </span><span class="nv">$INPUT_FILE</span><span class="s2">...&quot;</span>
-apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$CONTAINER</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$INPUT_DIR</span><span class="s2">/</span><span class="nv">$INPUT_FILE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Running on </span><span class="nv">$INPUT_FILE</span><span class="s2">..."</span>
+apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="s2">"</span><span class="nv">$CONTAINER</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$INPUT_DIR</span><span class="s2">/</span><span class="nv">$INPUT_FILE</span><span class="s2">"</span>
 
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Analysis complete. Results in </span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"Analysis complete. Results in </span><span class="nv">$OUTPUT_DIR</span><span class="s2">"</span>
 </pre></div>
 <p>Save this as <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">run_script.slm</code> and submit with:</p>
 <div class="highlight"><pre><span></span>sbatch<span class="w"> </span>run_script.slm<span class="w"> </span>your_file
@@ -13254,7 +13254,7 @@ apptainer<span class="w"> </span>inspect<span class="w"> </span>--deffile<span c
 <span class="c1"># List available apps (if any)</span>
 apptainer<span class="w"> </span>inspect<span class="w"> </span>--list-apps<span class="w"> </span>biotools.sif
 
-<span class="c1"># Check what&#39;s in the environment</span>
+<span class="c1"># Check what's in the environment</span>
 apptainer<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>biotools.sif<span class="w"> </span>conda<span class="w"> </span>list
 </pre></div>
 
