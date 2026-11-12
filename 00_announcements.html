@@ -13208,9 +13208,18 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="16-November-2026:-Adjusting-DefMemPerCPU-and-MaxMemPerCPU">16 November 2026: Adjusting DefMemPerCPU and MaxMemPerCPU<a class="anchor-link" href="#16-November-2026:-Adjusting-DefMemPerCPU-and-MaxMemPerCPU">&#182;</a></h3><p><strong>Issue:</strong> Every partition currently uses the same memory-per-CPU default and cap (5,304 MB), which matches none of the hardware. Jobs that do not request memory leave CPUs idle on some nodes, memory-heavy jobs are silently allocated extra CPUs they do not use, and about 278 GiB on node017 can never be allocated.</p>
+<h3 id="Adjusting-DefMemPerCPU-and-MaxMemPerCPU">Adjusting DefMemPerCPU and MaxMemPerCPU<a class="anchor-link" href="#Adjusting-DefMemPerCPU-and-MaxMemPerCPU">&#182;</a></h3><p>
+  <span style="display:inline-block; background:#1f4e79; color:#fff; padding:3px 10px; border-radius:4px; font-weight:600;">16 November 2026</span>
+  &nbsp; <strong>Downtime:</strong> None expected
+</p><p><strong>Issue:</strong> The current memory-per-CPU default and cap values do not align with the memory available on the compute nodes. This can lead to CPUs being left idle when jobs do not request memory, jobs being allocated more CPUs than they actually use, and in some cases memory on node-017 that cannot be allocated at all.</p>
 <p><strong>Fix:</strong> Set the default per partition from each node's real memory per CPU, with headroom for the operating system. Replace the cap with either the real ratio or memory-based billing.</p>
 <p><strong>Advantages:</strong> Nodes can be filled completely, with no stranded CPUs or memory. Users get the CPUs they asked for, and memory-heavy work is charged fairly for the share of the node it occupies.</p>
+<p><strong>User advice:</strong></p>
+<ul>
+<li>Jobs that do not request memory with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--mem</code> or <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--mem-per-cpu</code> will receive slightly less memory than before. For most jobs this makes no difference.</li>
+<li>If your job is memory sensitive, set its memory requirement explicitly in your submission script, for example <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">#SBATCH --mem=16G</code> or <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">#SBATCH --mem-per-cpu=4G</code>.</li>
+<li>Jobs already queued at the changeover keep the memory they were given at submission. The new defaults only apply to jobs submitted afterwards.</li>
+</ul>
 
 </div>
 </div>
@@ -13218,8 +13227,17 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="25-November-2026:-Head-node-and-login-node-upgrade-to-RHEL-9.8">25 November 2026: Head node and login node upgrade to RHEL 9.8<a class="anchor-link" href="#25-November-2026:-Head-node-and-login-node-upgrade-to-RHEL-9.8">&#182;</a></h3><p>This change will upgrade the Anatra head node and login node from RHEL 9.6 to RHEL 9.8 to keep the cluster on a supported operating system version and to apply maintenance and security updates.</p>
-<p><strong>Downtime: 1 day.</strong> During the maintenance window, cluster access, job submission and management services will be unavailable. Running jobs on compute nodes may be interrupted, run with degraded performance or fail because of the temporary loss of communication with cluster management services. Post-upgrade validation and rollback procedures will be in place to minimise risk and restore service if required.</p>
+<h3 id="Head-node-and-login-node-upgrade-to-RHEL-9.8">Head node and login node upgrade to RHEL 9.8<a class="anchor-link" href="#Head-node-and-login-node-upgrade-to-RHEL-9.8">&#182;</a></h3><p>
+  <span style="display:inline-block; background:#1f4e79; color:#fff; padding:3px 10px; border-radius:4px; font-weight:600;">25 November 2026</span>
+  &nbsp; <strong>Downtime:</strong> 1 day
+</p><p>This change will upgrade the Anatra head node and login node from RHEL 9.6 to RHEL 9.8 to keep the cluster on a supported operating system version and to apply maintenance and security updates.</p>
+<p><strong>Impact:</strong> During the maintenance window, cluster access, job submission and management services will be unavailable. Running jobs on compute nodes may be interrupted, run with degraded performance or fail because of the temporary loss of communication with cluster management services. Post-upgrade validation and rollback procedures will be in place to minimise risk and restore service if required.</p>
+<p><strong>User advice:</strong></p>
+<ul>
+<li>Save your work and log out of the login node before the maintenance window begins.</li>
+<li>Avoid submitting jobs whose run time could overlap the maintenance window, as they may fail. Where possible, set a time limit with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--time</code> so that jobs finish before the window starts, or hold them until the upgrade is complete.</li>
+<li>Jobs still queued when the window starts will remain in the queue and start once the service is restored.</li>
+</ul>
 
 </div>
 </div>
