@@ -13164,7 +13164,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Announcements">Announcements<a class="anchor-link" href="#Announcements">&#182;</a></h1><p><em>Last updated: 12 November 2026</em></p>
+<h1 id="Announcements">Announcements<a class="anchor-link" href="#Announcements">&#182;</a></h1><p><em>Last updated: 25 November 2026</em></p>
 <p>This page lists planned changes and maintenance affecting the Anatra HPC service. Please check it regularly for the most up-to-date information.</p>
 
 </div>
@@ -13193,6 +13193,21 @@ div#notebook {
 <td>25 November 2026</td>
 <td>Upgrade head node and login node from RHEL 9.6 to RHEL 9.8</td>
 <td>1 day</td>
+</tr>
+<tr>
+<td>1 December 2026</td>
+<td>Schedule individual hardware threads</td>
+<td>None expected</td>
+</tr>
+<tr>
+<td>8 December 2026</td>
+<td>Adjust job priority weights</td>
+<td>None expected</td>
+</tr>
+<tr>
+<td>15 December 2026</td>
+<td>Time limits and backfill scheduling</td>
+<td>None expected</td>
 </tr>
 <tr>
 <td>To be confirmed</td>
@@ -13238,6 +13253,42 @@ div#notebook {
 <li>Avoid submitting jobs whose run time could overlap the maintenance window, as they may fail. Where possible, set a time limit with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--time</code> so that jobs finish before the window starts, or hold them until the upgrade is complete.</li>
 <li>Jobs still queued when the window starts will remain in the queue and start once the service is restored.</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Scheduling-individual-hardware-threads">Scheduling individual hardware threads<a class="anchor-link" href="#Scheduling-individual-hardware-threads">&#182;</a></h3><p>
+  <span style="display:inline-block; background:#1f4e79; color:#fff; padding:3px 10px; border-radius:4px; font-weight:600;">1 December 2026</span>
+  &nbsp; <strong>Downtime:</strong> None expected
+</p><p>Slurm currently allocates whole cores, so a job that requests an odd number of CPUs is given one extra CPU. That extra CPU counts against your limits, fair share and default memory. After this change, Slurm will allocate individual hardware threads, and jobs will get exactly the number of CPUs they request.</p>
+<p><strong>User advice:</strong> No action is needed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Adjusting-job-priority-weights">Adjusting job priority weights<a class="anchor-link" href="#Adjusting-job-priority-weights">&#182;</a></h3><p>
+  <span style="display:inline-block; background:#1f4e79; color:#fff; padding:3px 10px; border-radius:4px; font-weight:600;">8 December 2026</span>
+  &nbsp; <strong>Downtime:</strong> None expected
+</p><p>We will adjust how much a job's age and its owner's fair share count towards its priority in the queue. This will make scheduling fairer and stop newer jobs getting stuck behind long-queued work.</p>
+<p><strong>User advice:</strong> No action is needed. You can check your job's priority with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">sprio -j &lt;jobid&gt;</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Time-limits-and-backfill-scheduling">Time limits and backfill scheduling<a class="anchor-link" href="#Time-limits-and-backfill-scheduling">&#182;</a></h3><p>
+  <span style="display:inline-block; background:#1f4e79; color:#fff; padding:3px 10px; border-radius:4px; font-weight:600;">15 December 2026</span>
+  &nbsp; <strong>Downtime:</strong> None expected
+</p><p>The maximum wall time for a job will be set by its QOS only: <strong>5 days</strong> for <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">normal</code> and <strong>14 days</strong> for <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">high</code>. We will also tune the backfill scheduler so that it can plan further ahead and fit more jobs into gaps in the schedule.</p>
+<p><strong>User advice:</strong> Set a realistic time limit with <code style="background-color:#F7F7F7;border:1px solid #CFCFCF">--time</code>. Jobs with accurate, shorter time limits are easier to backfill and usually start sooner.</p>
 
 </div>
 </div>
